@@ -2,12 +2,12 @@
 
 Der Begriff Microservice ist leider nicht einheitlich definiert, so dass eine
 
-## Independent Systems Architecture (ISA) Principles
+## Independent-Systems-Architecture-Prinzipien (ISA) 
 
 [ISA](http://isa-principles.org) (Independent Systems Architecture)
-ist eine Sammlung von Best Practices, die in vielen Projekten sehr gut
-funktioniert haben. Es basiert auf Erfahrung insbesondere mit
-Microservices und den Herausforderungen in Microservice-Projekten.
+ist eine Sammlung von grundlegenden Prinzipien für Microservices. Es
+basiert auf Erfahrung mit den Herausforderungen von Microservice in
+vielen verschiedenen Projekten.
 
 ## Bedingungen
 
@@ -111,3 +111,73 @@ Weitere Informationen, Links und eine ausführlichere Begründung finden
 sich unter <http://isa-principles.org/>.
 
 ## Self-contained Systems
+
+Die ISA-Prinzipien definieren wichtige Prinzipien für
+Microservices, aber lassen bewusst Fragen offen wie beispielsweise die
+Organisation, die fachliche Aufteilung oder ob Microservices eine UI
+enthalten sollen oder nicht.
+
+Self-contained Systems (SCS) sind ein Ansatz für Microservices, der
+sich schon in vielen Projekten bewährt hat.  Alle wesentliche
+Informationen zu SCSs finden sich auf der Website
+http://scs-architecture.org/ . Hier ein Überblick über die
+Eigenschaften:
+
+- Jedes SCS ist eine *autonome Web-Anwendung*. Der Code für die
+  Darstellung der Web-Oberfläche ist in dem SCS enthalten. So kann
+  ein SCS seine Funktionalitäten erbringen, ohne auf andere SCSs
+  angewiesen zu sein.
+
+- SCSs dürfen sich *keine UI teilen*. Schließlich soll ein SCS seine
+  Features über seine eigene UI nutzbar machen.
+
+- Ein SCS kann eine *optionale API* haben. Das ist aber nicht
+  unbedingt notwendig, da das SCS bereits eine Web-Oberfläche für die
+  Benutzer hat. Für mobile Clients oder andere SCSs kann der Zugriff
+  über eine API aber nützlich sein.
+
+- Das SCS enthält *Daten und Logik*. Ein Feature wird typischerweise
+  Anpassungen in UI, Logik und Daten erfordern. Alle diese Änderungen
+  können in einem SCS vorgenommen werden.
+
+- Für ein SCS ist immer genau *ein Team* verantwortlich. Ein Team kann
+  jedoch durchaus mehrere SCSs betreuen.
+
+- Um eine enge Kopplung zu vermeiden, sollten SCSs sich *keinen
+  fachlichen Code teilen*. Nur gemeinsamer technischer Code ist
+  erlaubt.  Als grobe Regel gilt: Nur Code, den man als Open Source
+  veröffentlichen würde, darf zwischen SCS geteilt werden.
+
+- Um die SCS weiter zu entkoppeln, sollten sich die SCS *keine
+  Infrastruktur teilen*, also beispielsweise keine gemeinsame Datenbank
+  nutzen. Aus Kostengründen können allerdings Kompromisse eingegangen
+  werden.
+
+- Die *Kommunikation* zwischen SCSs ist *priorisiert*:
+  * UI-Integration hat die höchste Priorität.
+  * Dann folgt asynchrone Kommunikation
+  * und schließlich ist auch synchrone Kommunikation möglich.
+
+    Dabei liegt der Fokus auf der Entkopplung und Resilience. Die
+    höhere priorisierten Kommunikationsarten helfen beim erreichen
+    dieser Ziele.
+
+Die SCS-Idee hat sich in vielen Projekten schon bewährt. Die
+[Links der Website](http://scs-architecture.org/links.html) geben
+einen Eindruck von der Nutzung. Sie ist in Reinform nur für
+Web-Anwendungen nutzbar, da zu jedem SCS eine Web-Oberfläche
+gehört. Die konsequente Trennung in Systeme, die eine Fachlichkeit
+implementieren und von einem Team entwickelt werden, ist aber auch für
+andere Arten von Systemen sinnvoll.
+
+## Fazit & Ausblick
+
+Die Independent-Systems-Architecture-Prinzipien (ISA) definieren die
+Prinzipien, denen alle Microservice-Systeme entsprechen sollten,
+während Self-contained Systems Best Practices definieren, die in
+vielen Projekten erfolgreich eingesetzt worden sind.
+
+Die weiteren Kapitel beschreiben technische Rezepte für die
+Kommunikation zwischen Microservices und zwar in der Reihenfolge der
+Prioritäten bei SCS: UI-Integration, asynchrone Kommunikation und
+schließlich synchrone Kommunikation.
