@@ -179,14 +179,16 @@ System, das SSI mit nginx zur Integration der Frontends nutzt.
 ## Alternative Rezepte: Links und JavaScript
 
 Einen ganz anderen Ansatz für Frontend-Integration nutzt das
-Crimson-Assurance-Beispiel. Es steht unter
+Crimson-Assurance-Beispiel.
+
+![Integration mit Links und JavaScript](images/links-javascript-ueberblick.png)
+
+Es steht unter
 <https://crimson-portal.herokuapp.com/> im Internet zur Verfügung und
 unter <https://github.com/ewolff/crimson-assurance-demo> als
 Docker-Container, um das Beispiel auf dem eigenen Laptop ablaufen zu
 lassen. <https://github.com/ewolff/crimson-assurance-demo/blob/master/WIE-LAUFEN.md>
 erläutert, wie man das Beispiel starten kann.
-
-![Integration mit Links und JavaScript](images/links-javascript-ueberblick.png)
 
 Dieses Beispiel implementiert eine Anwendung für einen Sachbearbeiter
 einer Versicherung. Die Hauptanwendung `crimson-portal` hat Links
