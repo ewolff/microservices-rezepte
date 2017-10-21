@@ -1,6 +1,6 @@
 # Asynchrone Microservices
 
-Microservices können Nachrichten austauschen. Bei asynchroner
+Microservices können Nachrichten austauschen. Asynchrone
 Kommunikation erlaubt eine lose Kopplung und eine gute Resilience.
 
 ## Definition
@@ -23,7 +23,7 @@ zwei Möglichkeiten:
   typischerweise zu einem anderen Zeitpunkt mit den anderen Systemen
   kommunizieren. Der Microservice kann beispielsweise Daten
   replizieren, die bei der Bearbeitung eines Request genutzt werden. Beispielsweise können Kundendaten repliziert werden, um dann
-  bei der Bearbeitung einer Bestellung auf die dann lokal vorhandenen
+  bei der Bearbeitung einer Bestellung auf die lokal vorhandenen
   Kundendaten zuzugreifen.
 
 * Der Microservice schickt einem anderen Microservice einen Request,
@@ -44,7 +44,7 @@ Asynchrone Microservices haben einige Vorteile:
 
 * Die Übertragung und auch die Bearbeitung einer Nachricht kann fast
   immer *garantiert* werden: Die Nachrichten werden langfristig
-  gespeichert. Irgendwann werden sie bearbeitet. Das sie bearbeitet
+  gespeichert. Irgendwann werden sie bearbeitet. Dass sie bearbeitet
   werden, kann man beispielsweise absichern, indem die Empfänger die
   Nachricht quittieren (Acknowledge).
 
@@ -52,10 +52,11 @@ Asynchrone Microservices haben einige Vorteile:
   bieten eine fachliche Entkopplung. Ein Event könnte beispielsweise
   "Bestellung eingegangen" sein. Jeder Microservice kann selber
   entscheiden, wie er auf den Event reagiert. Beispielsweise kann ein
-  Microservice eine Rechnung erstellen, und ein andere die Lieferung
+  Microservice eine Rechnung erstellen und ein anderer die Lieferung
   anstoßen. Wenn weitere Microservices beispielsweise für ein
-  Bonusprogramm hinzukommen, müssen diese nut noch geeignet auf den
-  Event reagieren. So ist das System sehr leicht erweiterbar.
+  Bonusprogramm hinzukommen, müssen dieser nur geeignet auf den
+  schon bereits vorhandenen Event reagieren. So ist das System sehr
+  leicht erweiterbar.
 
 ## Rezept: Kafka
 
@@ -73,7 +74,7 @@ dauerhaft speichert, statt sie nach der Übertragung zu verwerfen.
 
 Die wesentlichen Konzepte von Kafka sind:
 
-* Es gibt drei *APIs*: die Producer API zum Senden von Daten zum
+* Es gibt drei *APIs*: die *Producer API* zum Senden von Daten zum
   Senden von Daten, die *Consumer API* zum Empfang von Daten und
   *Streams API* zum Transformieren der Daten.
 
@@ -82,23 +83,24 @@ transportierten Wert als *Value*. Außerdem haben
 *Records* eine Schlüssel (*Key*) und  einen Zeitstempel
 (*Timestamp*).
 
-* *Topics* organisieren Records. So können Events einer bestimmten Art
+* *Topics* fassen Records zusammen. So können Events einer bestimmten Art
 in einem Topic verschickt werden.
 
 * Topics sind in *Partitionen* unterteilt. Wenn ein Producer einen neuen
-Record erstellt, wird er an eine Partition angehängt. Die Aufteilung
+Record erstellt, wird der Record an eine Partition des Topics
+angehängt. Die Aufteilung der Records
 auf die Partitionen erfolgt anhand des Keys des Records.
 
 * Kafka speichert für jeden Consumer den *Offset* für jede
 Partition. Dieser Offset zeigt an, welchen Record in der Partition der
 Consumer zuletzt gelesen hat. Wenn ein Consumer einen Record
 bearbeitet hat, kann der Consumer einen neuen Offset committen. Für
-jeden Consumer muss nur in der Offset in jeder Partition gespeichert
+jeden Consumer muss nur der Offset in jeder Partition gespeichert
 werden, was relativ leichtgewichtig ist.
 
 * In einer *Consumer Group* gibt es für jede Partition genau einen
   Consumer. So kann sichergestellt werden, dass ein Record von einem
-  Consumer bearbeitet wird: Der Record wir einer Partition zugeteilt,
+  Consumer bearbeitet wird: Der Record wird einer Partition zugeteilt,
   die dank der Consumer Group von einem Consumer bearbeitet wird.
 
 * *Log Compaction* ist ein Mechanismus, mit dem alte Records gelöscht
@@ -123,6 +125,8 @@ Wenn die Docker Container auf der lokalen Maschine laufen, steht unter
 wird von einem Apache-httpd-Webserver angezeigt, der als Reverse Proxy
 auch HTTP-Anfragen an die Microservices weitergibt.
 
+####  Aufteilung des Beispiels in Microservices
+
 Das System besteht aus einem Microservice `order`, der eine Bestellung
 über die Web-Oberfläche entgegen nimmt. Die Bestellung schickt der
 Bestellprozess dann als Record über Kafka an die Microservices für den
@@ -131,17 +135,6 @@ Rechnung `invoicing`. Die Bestellung wird als JSON übertragen. So
 können der Rechnungs-Microservice und der Lieferungs-Microservice aus
 der Datenstruktur jeweils die Daten auslesen, die für den jeweiligen
 Microservice relevant sind.
-
-Eine Alternative wäre [Avro](http://avro.apache.org/). Das ist ein
-Datenformat, das ein binäres Protokoll anbietet aber auch eine
-JSON-basierte Repräsentation.  Avro hat ein Schema. Dabei ist es zum
-Beispiel mit Vorgabewerten auch möglich, Daten von einer alten Version
-des Schemas in eine neue Version des Schema zu konvertieren. Dadurch
-können alte Events selbst dann noch verarbeitet werden, wenn das
-Schema sich mittlerweile geändert hat.
-
-Jeder Kafka-Record enthält eine Bestellung. Der Key ist ID der
-Bestellung mit Zusatz `created`, also beispielsweise `1created`.
 
 Alle Lieferungs-Microservices und alle Rechnungs-Microservices sind
 jeweils in einer Consumer Group organisiert. Das bedeutet, dass die
@@ -156,6 +149,20 @@ die Informationen aus den Records in ihren eigenen
 Datenbank-Schemata. Alle Microservices nutzen eine gemeinsame
 Postgres-Datenbank.
 
+Jeder Kafka-Record enthält eine Bestellung. Der Key ist ID der
+Bestellung mit Zusatz `created`, also beispielsweise `1created`.
+
+
+#### Avro: Ein alternatives Datenformat
+
+Eine Alternative wäre [Avro](http://avro.apache.org/). Das ist ein
+Datenformat, das ein binäres Protokoll anbietet aber auch eine
+JSON-basierte Repräsentation.  Avro hat ein Schema. Dabei ist es zum
+Beispiel mit Vorgabewerten auch möglich, Daten von einer alten Version
+des Schemas in eine neue Version des Schema zu konvertieren. Dadurch
+können alte Events selbst dann noch verarbeitet werden, wenn das
+Schema sich mittlerweile geändert hat.
+
 ## Alternatives Rezepte: Atom
 
 Synchrone Microservices kann man auch mit REST umsetzen. So ist es zum
@@ -164,7 +171,7 @@ Beispiel möglich, Bestellungen als
 anzubieten. Atom ist ein Datenformat, das ursprünglich entwickelt
 wurde, um Blogs für Leser verfügbar zu machen. So wie für jeden neuen
 Blog-Beitrag ein neuer Eintrag in einem Atom-Dokument erzeugt wird,
-ist dasselbe natürlich auch für jede neue Bestellung möglich. Ein
+ist dasselbe auch für jede neue Bestellung möglich. Ein
 Client muss dann regelmäßig das Atom-Dokument abholen und neue
 Einträge verarbeiten. Das ist nicht besonders effizient. Es kann aber
 durch HTTP-Caching optimiert werden. Dann werden nur Daten übertragen,
@@ -185,10 +192,11 @@ auch bei großen Datenmengen eher sichergestellt werden.
 
 Leider kann diese Art der Kommunikation aber nicht dafür sorgen, dass
 eine Bestellung nur von einer Microservice-Instanz empfangen und
-bearbeitet wird. Wenn einer der Microservices-Instanzen eine neue
+bearbeitet wird. Wenn einer der Microservices-Instanzen im Beispiel
+eine neue
 Bestellung aus dem Atom-Feed ausliest, dann überprüft er zunächst in
 der Datenbank zunächst, ob es schon einen Eintrag für diese Bestellung
-gibt, und erzeugt nur selber einen, wenn das nicht der Fall ist. So
+gibt, und erzeugt nur selber einen Eintrag, wenn das nicht der Fall ist. So
 wird für jede Bestellung nur ein Eintrag in der Datenbank erstellt.
 
 Es ist übrigens nicht zwingend, das Atom-Format zu nutzen, Genauso gut
