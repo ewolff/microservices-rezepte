@@ -148,8 +148,7 @@ gecacht und zwar 30 Sekunden lang. Das kann man an der eingeblendeten
 Zeit in der Navigationsleiste erkennen, die sich nur alle 30 Sekunden
 ändert. Wenn einer der Microservices 
 ausfällt, verlängert sich die Zeit für das Caching sogar auf 15
-Minuten. Das kann man mit `docker-compose up --scale common=0`
-bzw. `docker-compose up --scale order=0` selber ausprobieren. Die
+Minuten. Die
 Konfiguration für Varnish findet sich in der Datei `default.vcl` im
 Verzeichnis `docker/varnish/` im Beispiel.
 
@@ -239,3 +238,20 @@ Postbox.
 Hörenswert ist auch
 [Frontend-Integrations-Episode](https://www.innoq.com/de/podcast/025-scs-frontend-integration/)
 des innoQ-Podcasts.
+
+## Experimente
+
+* Starte das Beispiel. Siehe
+<https://github.com/ewolff/SCS-ESI/blob/master/WIE-LAUFEN.md>.
+
+* Betrachte die Ausgabe des Varnish-Cache unter
+  <http://localhost:8080/> und vergleiche ihn mit der Ausgabe des
+  Order-Microservice unter <http://localhost:8090/>. Wirf einen Blick
+  auf den Quelltext der zurückgegebenen HTML-Seiten mit dem
+  Browser. Wie kann man auf die HTML-Fragmente des Common-Microservice
+  zugreifen?
+
+* Probiere die Oberfläche aus. Stoppe die Microservices mit `docker-compose up --scale common=0`
+bzw. `docker-compose up --scale order=0`. Welche Teile der
+Microservice sind noch nutzbar?
+
