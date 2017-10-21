@@ -41,7 +41,7 @@ Architekturentscheidungen haben:
 
 4. Die Wahl der *Integrations-Optionen* muss für das System begrenzt
 und standardisiert sein.  Die Integration kann mit synchronen oder
- asynchrone Kommunikation stattfinden und / oder auf UI-Ebene.
+ asynchrone Kommunikation stattfinden und / oder auf Frontend-Ebene.
 
 5. *Kommunikation* muss auf eine einige Protokollen wie REST oder
 Messaging begrenzt sein. Auch Metadaten, z.B. zur Authentifizierung
@@ -154,7 +154,7 @@ Eigenschaften:
   werden.
 
 - Die *Kommunikation* zwischen SCSs ist *priorisiert*:
-  * UI-Integration hat die höchste Priorität.
+  * Frontend-Integration hat die höchste Priorität.
   * Dann folgt asynchrone Kommunikation
   * und schließlich ist auch synchrone Kommunikation möglich.
 
@@ -179,5 +179,5 @@ vielen Projekten erfolgreich eingesetzt worden sind.
 
 Die weiteren Kapitel beschreiben technische Rezepte für die
 Kommunikation zwischen Microservices und zwar in der Reihenfolge der
-Prioritäten bei SCS: UI-Integration, asynchrone Kommunikation und
+Prioritäten bei SCS: Frontend-Integration, asynchrone Kommunikation und
 schließlich synchrone Kommunikation.
