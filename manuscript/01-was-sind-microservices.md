@@ -1,6 +1,8 @@
 # Was sind Microservices?
 
-Der Begriff Microservice ist leider nicht einheitlich definiert, so dass eine
+Der Begriff Microservice ist leider nicht einheitlich definiert, so
+dass eine diese Broschüre zunächst Microservices und ander
+Grundlegenden Ideen darstellen muss.
 
 ## Independent-Systems-Architecture-Prinzipien (ISA) 
 

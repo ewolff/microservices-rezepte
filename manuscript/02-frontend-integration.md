@@ -155,8 +155,9 @@ Der Varnish-Cache verbessert durch das Caching also nicht nur die
 Performance des Systems sondern auch die Resilience.
 
 Bei einer Server-seitigen Integration wird immer die gesamte
-HTML-Seite mit allen Fragmenten ausgeliefert. Im Beispiel ist das so
-sinnvoll: Die Seite ohne Rahmen und Bootstrap ist eigentlich nicht
+HTML-Seite mit allen Fragmenten ausgeliefert. Im Beispiel müssen
+tatsächlich alle Fragmente der Seite vorhanden sein:
+Die Seite ohne Rahmen und Bootstrap ist eigentlich nicht
 benutzbar. Eine optionale Information wie die Anzahl der Waren im
 Warenkorb muss nicht zwangsläufig mit ESI integriert werden.
 
@@ -239,7 +240,7 @@ des innoQ-Podcasts.
 
 ## Experimente
 
-* Starte das Beispiel. Siehe
+* Starte das ESI-Beispiel. Siehe
 <https://github.com/ewolff/SCS-ESI/blob/master/WIE-LAUFEN.md>.
 
 * Betrachte die Ausgabe des Varnish-Cache unter
