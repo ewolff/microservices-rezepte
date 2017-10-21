@@ -6,15 +6,15 @@ am Frontend integriert werden.
 
 ## Warum Frontend-Integration?
 
-Frontend-Integration erzeugt eine lose Kopplung.  Wenn Links für die
+Frontend-Integration erzeugt eine *lose Kopplung*.  Wenn Links für die
 Integration verwendet werden, muss für eine Integration nur eine URL
 bekannt sein. Was sich hinter der URL verbirgt und wie die
 Informationen dargestellt werden, kann geändert werden, ohne dass es
-das andere System beeinflusst.
+das System beeinflusst, das die URL in einem Link anzeigt.
 
-Ein weiterer Vorteil von Frontend-Integration ist die freie Wahl der
-Frontend-Technologien. Gerade in diesem Bereich gibt es sehr viele
-neue Entwicklungen. Ständig gibt es neue JavaScript-Frameworks und
+Ein weiterer Vorteil von Frontend-Integration ist die *freie Wahl der
+Frontend-Technologien*. Gerade bei Frontend-Technologien gibt es sehr viele
+Innovationen. Ständig gibt es neue JavaScript-Frameworks und
 neue Möglichkeiten, attraktive Oberflächen zu gestalten. Ein wichtiger
 Vorteil von Microservices ist die Technologiefreiheit. Jeder
 Microservice kann eigene Technologien wählen. Wenn Technologiefreiheit
@@ -22,9 +22,9 @@ auch für das Frontend gelten soll, dann muss jeder Microservice sein
 eigenes Frontend mitbringen, das eine eigene Technologie nutzen
 kann. Dazu müssen die Frontends geeignet integriert sein.
 
-Dank Frontend-Integration ist alle Logik für eine Funktionalität in
-einem Microservice implementiert. Beispielsweise kann ein Microservice
-dafür verantwortlich sein, eingegangene Nachrichten anzuzeigen. Selbst
+Dank Frontend-Integration ist für eine Funktionalität *alle Logik in
+einem Microservice* implementiert. Beispielsweise kann ein Microservice
+dafür verantwortlich sein, eingegangene Nachrichten anzuzeigen, selbst
 wenn die Nachrichten in der UI eines anderen Microservice integriert
 dargestellt wird. Wenn weitere Informationen wie beispielsweise eine
 Priorität angezeigt werden sollen, kann die Logik, die Datenhaltung
@@ -34,21 +34,25 @@ nutzt.
 
 ## Rezept: ESI (Edge Side Includes)
 
-ESI (Edge Side Includes) ermöglichen es einer Web-Anwendung,
-HTML-Fragmente anderen Web-Anwendung zu integrieren (siehe
-Abbildung~\ref{fig-esi-konzept}). Dazu schickt die Web-Anwendung HTML,
+[ESI](https://www.w3.org/TR/esi-lang) (Edge Side Includes) ermöglichen
+es einem Microservice,
+HTML-Fragmente anderen Microservices zu integrieren.
+Dazu erzeugt der Microservice HTML,
 das ESI-Tags enthält. Die ESI-Implementierung wertet die ESI-Tags aus
 und bindet dann an den richtigen Stellen HTML-Fragmente anderer
-Web-Anwendungen ein.
+Microservices ein.
 
 ESI wird vor allem von Caches implementiert. Durch die Aufteilung der
 HTML-Seiten können statische Fragmente gecacht werden, selbst wenn sie
-in einer dynamischen Website integriert sind. CDNs können ebenfalls
+in einer dynamischen Website integriert sind. CDNs (Content Delivery
+Networks) können ebenfalls
 ESI implementieren. CDNs dienen eigentlich dazu, statische HTML-Seiten
-und Images von Servern auszuliefern. Dazu betreiben CDNs Server an
+und Images auszuliefern. Dazu betreiben CDNs Server an
 Knotenpunkten im Internet, sodass jeder Nutzer die Seiten und Images
 von einem Server in der Nähe laden kann und die Ladezeiten reduziert
 werden.
+Mit ESI können die CDNs zumindest Fragmente dynamischer Seiten
+ebenfalls cachen.
 
 ![ESI Konzept: HTML-Fragmente zu HTML-Seiten integrieren](images/esi-konzept.png)
 
@@ -56,20 +60,20 @@ Also setzt ESI eine HTML-Seite aus mehreren HTML-Fragmenten zusammen,
 die von verschiedenen Microservices geliefert werden können.
 
 Ein Beispiel für eine ESI-Integration steht unter
-<https://github.com/ewolff/SCS-ESI>. Die Anleitung, um das Beispiel
-auszuprobieren, steht unter
-<https://github.com/ewolff/SCS-ESI/blob/master/WIE-LAUFEN.md> bereit.
+<https://github.com/ewolff/SCS-ESI> bereit. Die Anleitung, um das Beispiel
+auszuprobieren, findet sich unter
+<https://github.com/ewolff/SCS-ESI/blob/master/WIE-LAUFEN.md>.
 
 Im Beispiel dient die ESI-Integration dazu, Fragmente eines
 Common-Microservices in alle Microservices zu integrieren. Das
-Beispiel bietet nur einen konkret implementierten Microservice an,
+Beispiel enthält nur einen konkret implementierten Microservice,
 nämlich den Order-Microservices. Der Order-Microservice ist eine
 Spring-Boot-Anwendung und in Java geschrieben, währen der
 Common-Microservice in Go geschrieben ist. Das zeigt, dass
-Frontend-Integration auch mit sehr unterschiedlichen Technologien
-möglich ist.
+auch sehr unterschiedlichen Technologien im Frontend integriert werden
+können.
 
-{title="Vom Order-Microservice ausgegebenes HTML"}
+{title="Listing 1: Vom Order-Microservice ausgegebenes HTML", id="listing-01"}
 ~~~~~~~~
 <html>
 <head>
@@ -87,19 +91,21 @@ möglich ist.
 </html>
 ~~~~~~~~
 
-Eine solche Seite gibt der Order-Microservice aus. Er steht unter
+Der Order-Microservice eine Seite wie in [Listing 1](listing-01)
+aus. Eine solche Seite steht unter
 <http://localhost:8090/> zur Verfügung, wenn die Docker-Container auf
 dem lokalen Rechner laufen. Wenn man diese Seite im Browser ansieht,
 interpretiert der Browser die ESI-Tags nicht, so dass der Browser eine
 verstümmelte Web-Seite anzeigt.
 
-Im Beispiel wird der Web-Cache [Varnish](https://varnish-cache.org/)
-als ESI-Implementierung genutzt.  Der Common-Microservice ergänzt die
+Das Beispiel nutzt den Web-Cache [Varnish](https://varnish-cache.org/)
+als ESI-Implementierung.  Der Common-Microservice ergänzt die
 Inhalte für die ESI-Tags. Der Varnish steht unter
 <http://localhost:8080/> bereit, wenn die Docker-Container auf dem
-lokalen Rechner laufen.
+lokalen Rechner laufen. [Listing 2](listing-02) zeigt das HTML, das
+der Varnish ausgibt.
 
-{title="Vom Varnish ausgegebenes HTML"}
+{title="Listing 2: Vom Varnish ausgegebenes HTML", id="listing-02"}
 ~~~~~~~~
 <html>
 <head>
@@ -135,16 +141,19 @@ produktiven System ist das jedoch kaum wünschenswert, weil die
 Oberfläche des Order-Microservice sicher mit der neuen
 Bootstrap-Version getestet werden muss.
 
+#### Caching und Resilience
+
 Da das System einen Varnish-Cache nutzt, werden die HTML-Fragmente
 gecacht und zwar 30 Sekunden lang. Das kann man an der eingeblendeten
-Zeit in der Navigationsleiste erkennen. Wenn einer der Microservices
+Zeit in der Navigationsleiste erkennen, die sich nur alle 30 Sekunden
+ändert. Wenn einer der Microservices 
 ausfällt, verlängert sich die Zeit für das Caching sogar auf 15
 Minuten. Das kann man mit `docker-compose up --scale common=0`
 bzw. `docker-compose up --scale order=0` selber ausprobieren. Die
 Konfiguration für Varnish findet sich in der Datei `default.vcl` im
 Verzeichnis `docker/varnish/` im Beispiel.
 
-Der Varnish-Cache verbessert durch das Caching nicht nur die
+Der Varnish-Cache verbessert durch das Caching also nicht nur die
 Performance des Systems sondern auch die Resilience.
 
 Bei einer Server-seitigen Integration wird immer die gesamte
@@ -152,6 +161,8 @@ HTML-Seite mit allen Fragmenten ausgeliefert. Im Beispiel ist das so
 sinnvoll: Die Seite ohne Rahmen und Bootstrap ist eigentlich nicht
 benutzbar. Eine optionale Information wie die Anzahl der Waren im
 Warenkorb muss nicht zwangsläufig mit ESI integriert werden.
+
+#### Alternative: Server-Side Includes (SSI)
 
 Eine andere Option für serverseitige Frontend-Integration ist
 [SSI](https://de.wikipedia.org/wiki/Server_Side_Includes) (Server-side
@@ -167,18 +178,18 @@ System, das SSI mit nginx zur Integration der Frontends nutzt.
 
 ## Alternative Rezepte: Links und JavaScript
 
-Eine ganz andere Ansatz für Integration nutzt das
-Crimons-Assurance-Beispiel. Es steht unter
+Einen ganz anderen Ansatz für Frontend-Integration nutzt das
+Crimson-Assurance-Beispiel. Es steht unter
 <https://crimson-portal.herokuapp.com/> im Internet zur Verfügung und
 unter <https://github.com/ewolff/crimson-assurance-demo> als
-Docker-Container, um sie auf dem eigenen Laptop ablaufen zu
+Docker-Container, um das Beispiel auf dem eigenen Laptop ablaufen zu
 lassen. <https://github.com/ewolff/crimson-assurance-demo/blob/master/WIE-LAUFEN.md>
 erläutert, wie man das Beispiel starten kann.
 
 ![Integration mit Links und JavaScript](images/links-javascript-ueberblick.png)
 
 Dieses Beispiel implementiert eine Anwendung für einen Sachbearbeiter
-in einer Versicherung. Die Hauptanwendung `crimson-portal` hat Links
+einer Versicherung. Die Hauptanwendung `crimson-portal` hat Links
 zu den Anwendung zum Brief-Schreiben `crimson-letter`, für das Melden
 von Schäden `crimson-damage` und zum REST-Backend-Simulator
 `crimson-backend`. Nur für die Integration der Postbox wird zusätzlich
@@ -187,9 +198,10 @@ implementiert, so dass die Postbox auch in das Portal eingeblendet
 werden kann.  Alle diese Anwendungen haben ein einheitliches Look &
 Fell, das durch gemeinsam genutzte Assets im Projekt
 `crimson-styleguide` unterstützt wird.
+Die Assets werden als Library beim Build in die Projekte integriert.
 
 Dieses Beispiel zeigt, wie weit man mit einer einfachen Integration
-mit Links kommen. Zudem zeigt auch dieses Beispiel die Integration
+mit Links kommt. Zudem zeigt auch dieses Beispiel die Integration
 sehr unterschiedlicher Systeme: Hauptanwendung, Brief und Schaden sind
 mit NodeJS implementiert, während die Postbox mit Java und Spring Boot
 implementiert ist.
@@ -203,7 +215,7 @@ Beide Projekte nutzen Links. Die verlinkten Seiten werden durch
 JavaScript eingeblendet. Selbst wenn das JavaScript aufgrund
 irgendwelcher Fehler nicht ausgeführt werden kann oder die verlinkte
 Seite nicht zur Verfügung steht, funktioniert das System dennoch: Es
-wird einfach nur ein Link angezeigt, statt dass die Postbox
+wird einfach ein Link angezeigt, statt dass die Postbox
 eingeblendet wird.
 
 ## Fazit
@@ -211,11 +223,12 @@ eingeblendet wird.
 Frontend-Integration führt zu einer sehr losen Kopplung. In vielen
 Fällen reichen Links aus. Dann müssen die System nur die URLs der
 verlinkten Seiten kennen. Wenn eine Web-Seite aus Fragmenten
-verschiedener Systeme zusammengesetzt werden soll, dann die dafür
+verschiedener Systeme zusammengesetzt werden soll, dann kann die dafür
 notwendige Integration auf dem Server erfolgen. Mit eine Cache kann
-ESI genutzt werden. Durch den Cache können HTML-Fragemente im Cache
-abgelegt werden. Das kommt Performance und Resilience zu Gute. Web
-Server können SSI implementieren. Wenn bereits ein Webserver im
+ESI genutzt werden. Durch den Cache können HTML-Fragmente im Cache
+abgelegt werden. Das kommt Performance und Resilience zu
+Gute. Webserver können SSI implementieren. Wenn bereits ein Webserver
+im
 Einsatz ist, dann kann so die zusätzliche Infrastruktur eines Caches
 eingespart werden. Und schließlich kann Client-seitige Integration
 optionale Inhalte nachladen, wie beispielsweise den Überblick über die
