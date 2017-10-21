@@ -1,12 +1,12 @@
 # Frontend-Integration
 
-Microservices können ein Web-Frontend enthalten.  Self-contained
-Systems müssen sogar ein Web-Frontend haben. Daher könne Microservices
+Microservices können ein Web-Frontend enthalten. Self-contained
+Systems müssen sogar ein Web-Frontend haben. Daher können Microservices
 am Frontend integriert werden.
 
 ## Warum Frontend-Integration?
 
-Frontend-Integration erzeugt eine *lose Kopplung*.  Wenn Links für die
+Frontend-Integration erzeugt eine *lose Kopplung*. Wenn Links für die
 Integration verwendet werden, muss für eine Integration nur eine URL
 bekannt sein. Was sich hinter der URL verbirgt und wie die
 Informationen dargestellt werden, kann geändert werden, ohne dass es
@@ -36,7 +36,7 @@ nutzt.
 
 [ESI](https://www.w3.org/TR/esi-lang) (Edge Side Includes) ermöglichen
 es einem Microservice,
-HTML-Fragmente anderen Microservices zu integrieren.
+HTML-Fragmente anderer Microservices zu integrieren.
 Dazu erzeugt der Microservice HTML,
 das ESI-Tags enthält. Die ESI-Implementierung wertet die ESI-Tags aus
 und bindet dann an den richtigen Stellen HTML-Fragmente anderer
@@ -48,7 +48,7 @@ in einer dynamischen Website integriert sind. CDNs (Content Delivery
 Networks) können ebenfalls
 ESI implementieren. CDNs dienen eigentlich dazu, statische HTML-Seiten
 und Images auszuliefern. Dazu betreiben CDNs Server an
-Knotenpunkten im Internet, sodass jeder Nutzer die Seiten und Images
+Knotenpunkten im Internet, so dass jeder Nutzer die Seiten und Images
 von einem Server in der Nähe laden kann und die Ladezeiten reduziert
 werden.
 Mit ESI können die CDNs zumindest Fragmente dynamischer Seiten
@@ -67,8 +67,8 @@ auszuprobieren, findet sich unter
 Im Beispiel dient die ESI-Integration dazu, Fragmente eines
 Common-Microservices in alle Microservices zu integrieren. Das
 Beispiel enthält nur einen konkret implementierten Microservice,
-nämlich den Order-Microservices. Der Order-Microservice ist eine
-Spring-Boot-Anwendung und in Java geschrieben, währen der
+nämlich den Order-Microservice. Der Order-Microservice ist eine
+Spring-Boot-Anwendung und in Java geschrieben, während der
 Common-Microservice in Go geschrieben ist. Das zeigt, dass
 auch sehr unterschiedlichen Technologien im Frontend integriert werden
 können.
@@ -91,7 +91,7 @@ können.
 </html>
 ~~~~~~~~
 
-Der Order-Microservice eine Seite wie in [Listing 1](listing-01)
+Der Order-Microservice gibt eine HTML-Seite wie in [Listing 1](listing-01)
 aus. Eine solche Seite steht unter
 <http://localhost:8090/> zur Verfügung, wenn die Docker-Container auf
 dem lokalen Rechner laufen. Wenn man diese Seite im Browser ansieht,
@@ -99,7 +99,7 @@ interpretiert der Browser die ESI-Tags nicht, so dass der Browser eine
 verstümmelte Web-Seite anzeigt.
 
 Das Beispiel nutzt den Web-Cache [Varnish](https://varnish-cache.org/)
-als ESI-Implementierung.  Der Common-Microservice ergänzt die
+als ESI-Implementierung. Der Common-Microservice ergänzt die
 Inhalte für die ESI-Tags. Der Varnish steht unter
 <http://localhost:8080/> bereit, wenn die Docker-Container auf dem
 lokalen Rechner laufen. [Listing 2](listing-02) zeigt das HTML, das
@@ -148,8 +148,7 @@ gecacht und zwar 30 Sekunden lang. Das kann man an der eingeblendeten
 Zeit in der Navigationsleiste erkennen, die sich nur alle 30 Sekunden
 ändert. Wenn einer der Microservices 
 ausfällt, verlängert sich die Zeit für das Caching sogar auf 15
-Minuten. Die
-Konfiguration für Varnish findet sich in der Datei `default.vcl` im
+Minuten. Die Konfiguration für Varnish findet sich in der Datei `default.vcl` im
 Verzeichnis `docker/varnish/` im Beispiel.
 
 Der Varnish-Cache verbessert durch das Caching also nicht nur die
@@ -163,9 +162,9 @@ Warenkorb muss nicht zwangsläufig mit ESI integriert werden.
 
 #### Alternative: Server-Side Includes (SSI)
 
-Eine andere Option für serverseitige Frontend-Integration ist
+Eine andere Option für Server-seitige Frontend-Integration ist
 [SSI](https://de.wikipedia.org/wiki/Server_Side_Includes) (Server-side
-Includes).  Das ist ein Feature, das die meisten Webserver
+Includes). Das ist ein Feature, das die meisten Webserver
 anbieten. In der Integration wird dann der Varnish-Cache durch einen
 Webserver ersetzt. Das hat den Vorteil, dass ein solcher Webserver
 beispielsweise für die TLS/SSL-Terminierung vielleicht schon vorhanden
@@ -191,7 +190,7 @@ erläutert, wie man das Beispiel starten kann.
 
 Dieses Beispiel implementiert eine Anwendung für einen Sachbearbeiter
 einer Versicherung. Die Hauptanwendung `crimson-portal` hat Links
-zu den Anwendung zum Brief-Schreiben `crimson-letter`, für das Melden
+zu den Anwendungen zum Brief-Schreiben `crimson-letter`, für das Melden
 von Schäden `crimson-damage` und zum REST-Backend-Simulator
 `crimson-backend`. Nur für die Integration der Postbox wird zusätzlich
 mit Hilfe von ca. 50 Zeilen JavaScript eine Client-seitige Integration
@@ -222,14 +221,13 @@ eingeblendet wird.
 ## Fazit
 
 Frontend-Integration führt zu einer sehr losen Kopplung. In vielen
-Fällen reichen Links aus. Dann müssen die System nur die URLs der
+Fällen reichen Links aus. Dann müssen die Systeme nur die URLs der
 verlinkten Seiten kennen. Wenn eine Web-Seite aus Fragmenten
 verschiedener Systeme zusammengesetzt werden soll, dann kann die dafür
-notwendige Integration auf dem Server erfolgen. Mit eine Cache kann
+notwendige Integration auf dem Server erfolgen. Mit einem Cache kann
 ESI genutzt werden. Durch den Cache können HTML-Fragmente im Cache
 abgelegt werden. Das kommt Performance und Resilience zu
-Gute. Webserver können SSI implementieren. Wenn bereits ein Webserver
-im
+Gute. Webserver können SSI implementieren. Wenn bereits ein Webserver im
 Einsatz ist, dann kann so die zusätzliche Infrastruktur eines Caches
 eingespart werden. Und schließlich kann Client-seitige Integration
 optionale Inhalte nachladen, wie beispielsweise den Überblick über die
@@ -253,5 +251,5 @@ des innoQ-Podcasts.
 
 * Probiere die Oberfläche aus. Stoppe die Microservices mit `docker-compose up --scale common=0`
 bzw. `docker-compose up --scale order=0`. Welche Teile der
-Microservice sind noch nutzbar?
+Microservices sind noch nutzbar?
 

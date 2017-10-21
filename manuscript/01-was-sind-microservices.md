@@ -5,17 +5,17 @@ Der Begriff Microservice ist leider nicht einheitlich definiert, so dass eine
 ## Independent-Systems-Architecture-Prinzipien (ISA) 
 
 [ISA](http://isa-principles.org) (Independent Systems Architecture)
-ist eine Sammlung von grundlegenden Prinzipien für Microservices. Es
-basiert auf Erfahrung mit den Herausforderungen von Microservice in
+ist eine Sammlung von grundlegenden Prinzipien für Microservices. Sie
+basiert auf Erfahrung mit den Herausforderungen von Microservices in
 vielen verschiedenen Projekten.
 
 ## Bedingungen
 
-Die Prinzipien verwenden *muss* für Prinzipien, die unbedingt eingehalten werden
+Bei den Prinzipien wird *muss* verwendet für Prinzipien, die unbedingt eingehalten werden
 müssen. *Sollte* beschreibt Prinzipien, die viele Vorteile haben, aber
 nicht unbedingt eingehalten werden müssen.
 
-Die ISA-Prinzipien sprechen von einem *System*.  Die IT-Landschaft
+Die ISA-Prinzipien sprechen von einem *System*. Die IT-Landschaft
 eines Unternehmens besteht aus vielen Systemen. Jedes System kann mit
 einer anderen Architektur und daher mit anderen Prinzipien
 implementiert sein.
@@ -29,22 +29,22 @@ internen Datenmodellen eines anderen Moduls z.B. in
 der Datenbank abhängen.
 
 2. Module sollten *separate Prozesse, Container oder
-virtuelle Maschinen*, um die Unabhängigkeit zu maximieren.
+virtuelle Maschinen* sein, um die Unabhängigkeit zu maximieren.
 
 3. Das System muss zwei klar getrennte Ebenen von
 Architekturentscheidungen haben:
    * Die *Makro-Architektur* umfasst Entscheidungen, die alle
    Module betreffen. Alle weiteren Prinzipien sind Teil der
    Makro-Architektur.
-   * Die *Mikro-Architecture* sind jene Entscheidungen, die für
+   * Die *Mikro-Architektur* sind jene Entscheidungen, die für
   jedes Modul anders getroffen werden können.
 
 4. Die Wahl der *Integrations-Optionen* muss für das System begrenzt
-und standardisiert sein.  Die Integration kann mit synchronen oder
- asynchrone Kommunikation stattfinden und / oder auf Frontend-Ebene.
+und standardisiert sein. Die Integration kann mit synchroner oder
+ asynchroner Kommunikation stattfinden und / oder auf Frontend-Ebene.
 
-5. *Kommunikation* muss auf eine einige Protokollen wie REST oder
-Messaging begrenzt sein. Auch Metadaten, z.B. zur Authentifizierung
+5. *Kommunikation* muss auf einige Protokolle wie REST oder
+Messaging begrenzt sein. Auch Metadaten, z.B. zur Authentifizierung,
 müssen standardisiert sein.
 
 6. Jedes Modul muss seine *eigene unabhängige
@@ -57,9 +57,9 @@ Konfiguration, Deployment, Log-Analyse, Tracing, Monitoring und
 Alarme. Es kann Ausnahmen vom Standard geben, wenn ein Modul sehr
 spezifische Anforderungen hat.
 
-8. *Standards* für Betrieb, Integration oder Kommunikation sollte auf
+8. *Standards* für Betrieb, Integration oder Kommunikation sollten auf
 Schnittstellenebene definiert werden. Das Protokoll kann als REST
-standardisiert sein und Datenstrukturen können standardisiert
+standardisiert sein, und Datenstrukturen können standardisiert
 werden. Aber jedes Modul sollte frei sein, eine andere
 REST-Bibliothek zu verwenden.
 
@@ -92,14 +92,14 @@ mit eigener Continuous-Delivery-Pipeline sichergestellt werden
 Die Standardisierung des Betriebs (Prinzip 7) erleichtert den Betrieb,
 gerade bei einer großen Anzahl an Microservices. Aber die Standards
 dürfen nicht die Technologie-Freiheit beschneiden und daher nur an der
-Schnittstelle ansetzten (Prinzip 8). Ein Microservices-System wird
+Schnittstelle ansetzen (Prinzip 8). Ein Microservices-System wird
 vielleicht nicht von Anfang an viele unterschiedliche Technologien
 nutzen, aber man sollte sich die Möglichkeit dazu freihalten, um bei
 der Weiterentwicklung besser aufgestellt zu sein.
 
 Microservices sind ein verteiltes System. Das erhöht die
 Wahrscheinlichkeit, dass ein Server, das Netzwerk oder ein
-Microservices ausfällt. Daher ist Resilience (Prinzip 9)
+Microservice ausfällt. Daher ist Resilience (Prinzip 9)
 unerlässlich. Außerdem können durch die Resilience Microservices auf
 eine andere Umgebung verschoben werden, was für den Betrieb im Cluster
 von Vorteil ist.
@@ -118,7 +118,7 @@ Organisation, die fachliche Aufteilung oder ob Microservices eine UI
 enthalten sollen oder nicht.
 
 Self-contained Systems (SCS) sind ein Ansatz für Microservices, der
-sich schon in vielen Projekten bewährt hat.  Alle wesentliche
+sich schon in vielen Projekten bewährt hat.  Alle wesentlichen
 Informationen zu SCSs finden sich auf der Website
 http://scs-architecture.org/ . Hier ein Überblick über die
 Eigenschaften:
@@ -145,7 +145,7 @@ Eigenschaften:
 
 - Um eine enge Kopplung zu vermeiden, sollten SCSs sich *keinen
   fachlichen Code teilen*. Nur gemeinsamer technischer Code ist
-  erlaubt.  Als grobe Regel gilt: Nur Code, den man als Open Source
+  erlaubt. Als grobe Regel gilt: Nur Code, den man als Open Source
   veröffentlichen würde, darf zwischen SCS geteilt werden.
 
 - Um die SCS weiter zu entkoppeln, sollten sich die SCS *keine
@@ -159,7 +159,7 @@ Eigenschaften:
   * und schließlich ist auch synchrone Kommunikation möglich.
 
     Dabei liegt der Fokus auf der Entkopplung und Resilience. Die
-    höhere priorisierten Kommunikationsarten helfen beim erreichen
+    höher priorisierten Kommunikationsarten helfen beim Erreichen
     dieser Ziele.
 
 Die SCS-Idee hat sich in vielen Projekten schon bewährt. Die
@@ -172,7 +172,7 @@ andere Arten von Systemen sinnvoll.
 
 ## Fazit & Ausblick
 
-Die Independent-Systems-Architecture-Prinzipien (ISA) definieren die
+Die Independent-Systems-Architecture (ISA) definiert die
 Prinzipien, denen alle Microservice-Systeme entsprechen sollten,
 während Self-contained Systems Best Practices definieren, die in
 vielen Projekten erfolgreich eingesetzt worden sind.
