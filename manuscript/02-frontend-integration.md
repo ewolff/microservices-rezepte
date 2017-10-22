@@ -178,7 +178,10 @@ System, das SSI mit nginx zur Integration der Frontends nutzt.
 ## Alternative Rezepte: Links und JavaScript
 
 Einen ganz anderen Ansatz für Frontend-Integration nutzt das
-Crimson-Assurance-Beispiel.
+Crimson-Assurance-Beispiel. Das Beispiel ist als Prototyp entstanden,
+der zeigt, wie eine Web-Anwendung mit Frontend-Integration umgesetzt
+werden kann. Die beiden innoQ-Mitarbeitern Lucas Dohmen und
+Marc Jansing haben das Beispiel implementiert.
 
 ![Integration mit Links und JavaScript](images/links-javascript-ueberblick.png)
 
