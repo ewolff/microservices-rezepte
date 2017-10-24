@@ -237,7 +237,7 @@ dafür das Protokoll keine eigene Unterstützung mitbringt.
 
 * Es ist möglich, mehrere Instanzen des Shipping- oder
   Invoicing-Microservice zu starten. Dazu kann `docker-compose up -d
-  ---scale shipping=2` oder `docker-compose up -d ---scale
+  --scale shipping=2` oder `docker-compose up -d --scale
   invoicing=2` dienen. Mit
   `docker logs mskafka_invoicing_2` kann man die Logs betrachten. Dort
-  gibt der Microservice dann auch aus, welche Partitionen er bearbeitet.
+  gibt der Microservice dann auch aus, welche Kafka-Partitionen er bearbeitet.
