@@ -20,22 +20,22 @@ Bestellung bearbeitet.
 
 Zu den Gründen für den Einsatz synchroner Microservices zählen:
 
-* Synchrone Microservices sind *einfach zu verstehen*. Statt eine
-lokalen Methoden-Aufruf wird einfach eine Funktionalität in einem
-anderen Microservice aufgerufen. Das entspricht weitgehend dem, was
+* Synchrone Microservices sind *einfach zu verstehen*. Statt eines
+lokalen Methoden-Aufrufs wird eine Funktionalität in einem
+anderen Microservice aufgerufen. Das entspricht dem, was
 Programmierer gewohnt sind.
 
 * Es kann eine bessere *Konsistenz* erreicht werden. Wenn bei jedem
   Aufruf die neusten Informationen aus den anderen Services geholt
-  werden, dann sind die Daten relativ aktuell und entsprechen den
+  werden, dann sind die Daten aktuell und entsprechen den
   Informationen der anderen Microservices, wenn nicht in letzter
   Sekunde noch eine Änderung eingetreten ist.
 
-Dafür wird allerdings *Resilience* aufwändiger: Wenn der aufgerufene
-Microservice gerade nicht zur Verfügung steht, dann muss der Aufrufer 
-mit dem Ausfall umgehen, ohne dass dabei der Aufrufer ebenfalls
+Dafür ist *Resilience* aufwändiger: Wenn der aufgerufene
+Microservice gerade nicht zur Verfügung steht, muss der Aufrufer 
+mit dem Ausfall so umgehen, dass der Aufrufer nicht ebenfalls
 ausfällt. Also kann der Aufrufer Daten aus einem Cache nutzen oder auf
-einen vereinfachten Algorithmus zurückgreifen werden, der die
+einen vereinfachten Algorithmus zurückgreifen, der die
 Informationen aus dem anderen Microservice nicht benötigt.
 
 ## Herausforderungen
@@ -45,22 +45,23 @@ werden:
 
 * Ein Microservice bietet seine Schnittstelle typischerweise per
 TCP/IP unter einer bestimmten IP-Adresse und einem bestimmten Port
-an. Also muss der Aufrufer diese Informationen bekommen. Dazu dient
+an. Der Aufrufer muss diese Informationen bekommen. Dazu dient
 *Service Discovery*.
 
-* Von jedem Microservice können mehrere Instanzen laufen. Die Aufrufe
-müssen per *Load Balancing* auf die Instanzen verteilt werden.
+* Von jedem Microservice können mehrere Instanzen laufen. *Load
+  Balancing* muss die Aufrufe auf die Instanzen verteilen.
 
-* Nach außen sollen alle Microservices als ein System wahrgenommen
+* Nach außen sollen alle Microservices als Teile eines Systems
+  wahrgenommen
   werden und unter einer URL bereit stehen. *Routing* sorgt dafür,
-  dass Aufrufe an das System an den richtigen Microservice
+  dass Aufrufe an den richtigen Microservice
   weitergeleitet werden.
   
 * Wie erwähnt, stellt *Resilience* eine besondere Herausforderung
   dar, mit der ebenfalls umgegangen werden muss.
 
 Eine Technologie für die Umsetzung synchroner Microservices muss für
-diese Herausforderungen eine Lösung anbieten.
+jede dieser Herausforderungen eine Lösung anbieten.
 
 ## Rezept: Kubernetes
 
@@ -71,18 +72,20 @@ Entwicklung und den Betrieb von Microservices immer wichtiger.
 
 Kubernetes basiert auf [Docker](https://www.docker.com/). Docker
 erlaubt es, in einem Linux-System Prozesse stärker voneinander zu
-entkoppeln: Docker-Container bieten eine Prozess ein eigenes
+entkoppeln: *Docker Container* bieten eine Prozess ein eigenes
 Datei-System und ein eigenes Netzwerk-Interface mit einer eigenen
 IP-Adresse. Im Gegensatz zu einer virtuellen Maschine nutzen aber alle
 Docker Container denselben Linux Kernel. So ist ein Docker Container
 kaum aufwändiger als ein Linux-Prozess. Es ist ohne weiteres möglich,
 hunderte Docker Container auf einem Laptop laufen zu lassen.
 
-Die Dateisysteme der Docker Container basieren auf Docker Images. Sie
+Die Dateisysteme der Docker Container basieren auf *Docker
+Images*. Die Images
 enthalten alle Dateien, die der Docker Container benötigt. Dazu kann
 eine Linux Distribution zählen oder auch eine
-Java-Laufzeitumgebung. Docker Images haben Schichte. Also kann die
-Linux Distribution eine Schicht sein und die Java-Laufzeitumgebung
+Java-Laufzeitumgebung. Docker Images haben Schichte. Die
+Linux Distribution kann eine Schicht sein und die
+Java-Laufzeitumgebung
 eine weitere. Alle Java-Microservices können sich diese beiden
 Schichten teilen. Diese Schichten werden dann nur einmal auf dem
 Docker Host gespeichert. Das reduziert den Speicherbedarf der Docker
@@ -92,12 +95,12 @@ Images erheblich.
 
 Docker Container auf einem einzigen Docker Host ablaufen zu lassen,
 ist nicht ausreichend. Wenn der Docker Host ausfällt, dann
-funktionieren fallen alle Docker Container aus. Außerdem ist die
+fallen alle Docker Container aus. Außerdem ist die
 Skalierbarkeit durch die Leistungsfähigkeit des Docker Hosts
 begrenzt.
 
 Um Docker Container in einem Cluster von Rechnern laufen zu lassen,
-gibt es Scheduler wie Kubernetes. Kubernetes führt dazu einige
+gibt es Scheduler wie *Kubernetes*. Kubernetes führt dazu einige
 Konzepte ein:
 
 * *Nodes* sind die Server, auf denen Kubernetes läuft. Sie sind in
@@ -128,9 +131,9 @@ ausfallen. Die Pods umfassen einen oder mehrere Docker
 
 Die Service erstellt den DNS-Eintrag und macht den Microservice unter
 einer IP-Adresse verfügbar, die im gesamten Cluster eindeutig
-ist. Schließlich erstellt der Server einen Node Port. Unter diesem
+ist. Schließlich erstellt der Server einen *Node Port*. Unter diesem
 Port kann der Service auf alle Kubernetes-Nodes erreicht werden. Statt
-einem Node Port kann eine Service auch einen Load Balancer
+einem Node Port kann eine Service auch einen *Load Balancer*
 erstellen. Das ist ein Load Balancer, der von der Infrastruktur
 angeboten wird. Wenn Kubernetes in der Amazon Cloud läuft, würde
 Kubernetes einen Amazon Elastic Load Balancer erstellen.
@@ -145,21 +148,25 @@ folgendermaßen:
   dann über den Hostnamen zugreifen.
 
 * *Load Balancing* implementiert Kubernetes auf IP-Ebene. Der
-  Kubernetes-Service hat eine eindeutige IP-Adresse, aber hinter den
+  Kubernetes-Service hat eine IP-Adresse. Hinter den
   Kulissen wird der Verkehr zu der IP-Adresse auf eine der
   Service-Instanzen umgeleitet.
 
 * Beim *Routing* kann der Kubernetes-Service entweder über den Node
-  Port oder über einen Load Balancer. Das hängt da
+  Port oder über einen Load Balancer. Das hängt davon ab, wie der
+  Service konfiguriert ist und ob die Infrastruktur einen Load
+  Balancer anbietet. Ein externer Nutzer kann entweder auf den Load
+  Balancer oder auf den Node Port zugreifen und so den Microservice
+  nutzen.
 
-* Für *Resilience* hat Kubernetes keine echte Lösung parat. Natürlich
+* Für *Resilience* hat Kubernetes keine Lösung parat. Natürlich
   kann Kubernetes Pods neu starten, aber weitere Resilience Patterns
-  wie Timeout oder Circuit Breaker implementiert Kubernetes leider
+  wie Timeout oder Circuit Breaker implementiert Kubernetes
   nicht.
 
 Die Lösung, die Kubernetes für die Herausforderungen
-synchroner Microservices bietet, führen dazu, dass der Code keine
-Abhängigkeiten zu Kubernetes hat. Wenn ein Microservice einen anderen
+synchroner Microservices bietet, führen zu keinen Code-Abhängigkeiten
+zu Kubernetes. Wenn ein Microservice einen anderen
 aufruft, muss er den Namen aus dem DNS auslesen und kommuniziert mit
 der zurückgegebenen IP-Adresse. Das unterscheidet sich nicht von der
 Kommunikation mit einem beliebigen anderen Server. Bei Routing nutzt
@@ -172,10 +179,10 @@ Kulissen Kubernetes am Werk ist.
 Das Beispiel ist unter
 <https://github.com/ewolff/microservice-kubernetes>
 verfügbar. <https://github.com/ewolff/microservice-kubernetes/blob/master/WIE-LAUFEN.md>
-erläutert die notwendigen Schritte detailliert, um die notwendige
+erläutert die Schritte detailliert, um die notwendige
 Software zu installieren und das Beispiel laufen zu lassen.
 
-Das Beispiel hat drei Microservices: Order, Customer und
+Das Beispiel besteht aus drei Microservices: Order, Customer und
 Catalog. Order nutzt Catalog und Customer mit der
 REST-Schnittstelle. Außerdem bietet jeder Microservice einige
 HTML-Seiten an.
@@ -184,25 +191,18 @@ Zusätzlich ist im Beispiel ein Apache-Webserver installiert, der dem
 Benutzer mit einer Webseite einen einfachen Einstieg in das System
 ermöglicht.
 
-Ebenso steht ein Hystrix Dashboard als eigener Pod zur Verfügung.  Das
+Ebenso steht ein Hystrix Dashboard als eigener Kubernetes Pod zur
+Verfügung.  Das
 Beispiel nutzt die Java-Library
 [Hystrix](https://github.com/Netflix/Hystrix/), um Resilience zu
 erreichen. Diese Bibliothek führt Aufrufe in einem anderen Thread Pool
 aus und implementiert unter anderem einen Timeout für die Aufrufe.
 
-Eine Alternative zu Hystrix wäre
-[Envoy](https://github.com/lyft/envoy). Das ist ein Proxy, der
-Resilience Patterns umsetzt. Jeder Aufruf muss dann durch den Proxy
-gehen. Der Vorteil ist, dass dann auch für Resilience keine
-Code-Abhängigkeiten entstehen.
-
 Auf einem Laptop kann man das Beispiel mit 
 [Minikube](https://github.com/kubernetes/minikube) ausführen. Diese
 Kubernetes-Distribution ist sehr einfach installierbar. Sie bietet
 aber keinen Load Balancer, so dass die Services nur über einen Node
-Port bereit stehen. Dafür ist der Aufruf der Kubernetes-Services sehr
-einfach: `minikube service apache` öffnet die Webseite des Apache
-Service und bietet so den Zugriff auf alle Microservices.
+Port bereit stehen.
 
 Das Skript `docker-build.sh` erzeugt die Docker Images für die
 Microservices und lädt sie in den öffentlichen Docker Hub
@@ -285,7 +285,7 @@ Außer Kubernetes gibt es einige weitere Lösungen für synchrone Microservices:
     nutzt Spring Cloud, um die Microservices bei Consul zu
     registrieren und Ribbon für das Load Balancing. Resilience deckt
     Hystrix ab. Ein Apache httpd setzt das Routing um. Consul Template
-    konfiguriert den Apache http. Eine Alternative wäre
+    konfiguriert den Apache httpd. Eine Alternative wäre
     [Registrator](https://github.com/gliderlabs/registrator), das
     Docker Container in Consul registrieren kann. Zusammen mit einem
     Zugriff auf Consul über DNS könnte Consul genauso transparent
@@ -296,7 +296,7 @@ Außer Kubernetes gibt es einige weitere Lösungen für synchrone Microservices:
   Microservices dar.
   - Für *Service Discovery* steht Eureka bereit. Es bietet ein
     REST-Interface und ermöglicht auch einen Cache auf dem Client
-    beispielsweise mit der Java-Client-Bibliothekt.
+    beispielsweise mit der Eureka-Java-Client-Bibliothek.
   - *Load Balancing* setzt der Netflix-Stack mit Ribbon um. Das ist
     eine Java-Bibliothek, die aus den von Eureka übermittelten Service
     Instanzen eine auswählt.
@@ -315,19 +315,20 @@ Die Beispiele Kubernetes und Cloud Foundry haben keine
 Code-Abhängigkeiten. So eine Lösung ist mit Consul ebenfalls
 implementierbar. Dadurch kann in den Microservices-Systemen auch
 andere Technologien als Java genutzt werden. Das unterstützt die
-Techologie-Freiheit.
+Technologie-Freiheit.
 
 ## Fazit
 
 Kubernetes bietet eine sehr mächtige Lösung für die Implementierung
-von synchronen Microservices. Kubernetes deckt außerdem den Betrieb
-der Microservices ab. So bietet es eine sehr vollständige Lösung. PaaS
-wie Cloud Foundry können bieten außerdem eine höhere Abstraktion,
+von synchronen Microservices, die außerdem den Betrieb
+der Microservices abdeckt. PaaS
+wie Cloud Foundry können bieten eine höhere Abstraktion,
 sodass der Nutzer sich nicht mit Docker auseinandersetzen muss. Aber
-sowohl Kubernetes wie auch Cloud Foundry erzwingen eine andere
+sowohl Kubernetes als auch Cloud Foundry erzwingen eine andere
 Ablaufumgebung. Das ist bei Consul und Netflix nicht so: Beide Systeme
 können in Docker Container wie auch auf virtuellen Maschinen oder
-physischen Servern betrieben werden.
+physischen Servern betrieben werden. Consul bietet dabei wesentlich
+mehr Features.
 
 ## Experimente
 
@@ -343,23 +344,3 @@ physischen Servern betrieben werden.
   gibt. Skaliere beispielsweise das Replica Set `catalog`.
   * `kubectl get deployments` zeigt an, wie viele Pods im jeweiligen
     Deployment laufen.
-  * Nutzen den Service. Beispielsweise öffnet `minikube service
-  apache` zeigt die Webseite mit Links zu  allen Microservices an.
-  Wähle den Order-Microservice und lass dir die
-  Bestellungen anzeigen.
-  * `kubectl describe pods -l run=catalog` zeigt die laufenden Pods
-    an. Dort findet Du auch die IP-Adresse der Pods in einer Zeile,
-    die mit `IP` beginnt.
-  * Logge dich mit `minikube ssh` auf dem Kubernetes-Rechner
-    ein. Nutze Befehle wie `curl 172.17.0.8:8080/metrics`. Du musst
-    die IP-Adresse anpassen. So kannst Du Dir die
-    Metriken der Catalog-Pods anzeigen zu lassen, die Spring Boot
-    erzeugt. Die Metriken
-    enthalten beispielsweise die Anzahl der Zugriffe, die mit einem
-    HTTP 200 (OK) beantwortet worden sind. Wenn Du nun den
-    Catalog-Microservice über die Webseiten nutzt, sollte jeder Pod 
-    einen Teil der Requests bearbeiten und sich daher die Metriken
-    aller Pods erhöhen.
-  * Nutze auch `minikube dashboard`, um die Informationen im Dashboard
-    zu betrachten.
-
