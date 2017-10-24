@@ -7,10 +7,10 @@ Kommunikation erlaubt eine lose Kopplung und eine gute Resilience.
 
 Asynchrone Microservices grenzen sich von synchronen Microservices
 ab. Das nächste Kapitel beschreibt synchrone Microservices
-detailliert.  Der Begriff "synchrone Microservices" steht für
-folgendes:
+detailliert. Der Begriff "synchrone Microservices" steht für
+Folgendes:
 
-> Ein Microservices ist synchron, wenn er bei der Bearbeitung von
+> Ein Microservice ist synchron, wenn er bei der Bearbeitung von
 > Requests selber einen Request an andere Microservices stellt und auf
 > das Ergebnis wartet.
 
@@ -18,11 +18,11 @@ Asynchrone Microservices warten also nicht auf die Antworten anderer
 Systeme, wenn sie gerade selber einen Request bearbeiten. Dazu gibt es
 zwei Möglichkeiten:
 
-* Der Microservice kommuniziert während der Bearbeitung eines Request
+* Der Microservice kommuniziert während der Bearbeitung eines Requests
   gar nicht mit anderen Systemen. Dann wird der Microservice
   typischerweise zu einem anderen Zeitpunkt mit den anderen Systemen
   kommunizieren. Der Microservice kann beispielsweise Daten
-  replizieren, die bei der Bearbeitung eines Request genutzt werden. Beispielsweise können Kundendaten repliziert werden, um dann
+  replizieren, die bei der Bearbeitung eines Requests genutzt werden. Beispielsweise können Kundendaten repliziert werden, um dann
   bei der Bearbeitung einer Bestellung auf die lokal vorhandenen
   Kundendaten zuzugreifen.
 
@@ -30,8 +30,8 @@ zwei Möglichkeiten:
   wartet aber nicht auf eine Antwort. Ein Microservice für die
   Abwicklung einer Bestellung kann eine Nachricht an einen anderen
   Microservice schicken, der die Rechnung erstellt. Eine Antwort auf
-  diese Nachricht ist nicht notwendig und daher muss man auf sie auch
-  nicht warten.
+  diese Nachricht ist nicht notwendig und muss daher auch
+  nicht abgewartet werden.
 
 ## Warum asynchrone Microservices?
 
@@ -54,13 +54,13 @@ Asynchrone Microservices haben einige Vorteile:
   entscheiden, wie er auf den Event reagiert. Beispielsweise kann ein
   Microservice eine Rechnung erstellen und ein anderer die Lieferung
   anstoßen. Wenn weitere Microservices beispielsweise für ein
-  Bonusprogramm hinzukommen, müssen dieser nur geeignet auf den
-  schon bereits vorhandenen Event reagieren. So ist das System sehr
+  Bonusprogramm hinzukommen, müssen diese nur geeignet auf den
+  bereits vorhandenen Event reagieren. So ist das System sehr
   leicht erweiterbar.
 
 ## Rezept: Kafka
 
-Kafka ist ein Beispiel einer Message-oriented Middleware (MOM). Ein
+Kafka ist ein Beispiel für eine Message-oriented Middleware (MOM). Ein
 MOM verschickt Nachrichten und stellt sicher, dass die Nachrichten
 beim Empfänger ankommen. MOMs sind asynchron. Sie implementieren also
 kein Request / Reply wie bei synchronen Kommunikationsprotokollen
@@ -74,13 +74,12 @@ dauerhaft speichert, statt sie nach der Übertragung zu verwerfen.
 
 Die wesentlichen Konzepte von Kafka sind:
 
-* Es gibt drei *APIs*: die *Producer API* zum Senden von Daten zum
-  Senden von Daten, die *Consumer API* zum Empfang von Daten und
+* Es gibt drei *APIs*: die *Producer API* zum Senden von Daten, die *Consumer API* zum Empfangen von Daten und die
   *Streams API* zum Transformieren der Daten.
 
 * Kafka organisiert Daten in *Records*. Sie enthalten den
 transportierten Wert als *Value*. Außerdem haben
-*Records* eine Schlüssel (*Key*) und  einen Zeitstempel
+*Records* einen Schlüssel (*Key*) und einen Zeitstempel
 (*Timestamp*).
 
 * *Topics* fassen Records zusammen. So können Events einer bestimmten Art
@@ -128,8 +127,8 @@ auch HTTP-Anfragen an die Microservices weitergibt.
 ####  Aufteilung des Beispiels in Microservices
 
 Das System besteht aus einem Microservice `order`, der eine Bestellung
-über die Web-Oberfläche entgegen nimmt. Die Bestellung schickt der
-Bestellprozess dann als Record über Kafka an die Microservices für den
+über die Web-Oberfläche entgegennimmt. Die Bestellung schickt der
+Bestellprozess dann als Record über Kafka an den Microservice für den
 Versand `shipping` und den Microservice für die Erstellung der
 Rechnung `invoicing`. Die Bestellung wird als JSON übertragen. So
 können der Rechnungs-Microservice und der Lieferungs-Microservice aus
@@ -139,9 +138,9 @@ Microservice relevant sind.
 Alle Lieferungs-Microservices und alle Rechnungs-Microservices sind
 jeweils in einer Consumer Group organisiert. Das bedeutet, dass die
 Records für die Bestellungen auf alle Consumer verteilt werden, aber
-jeder Record nur an genau einen Consumer geschickt werden. So kann
+jeder Record nur an genau einen Consumer geschickt wird. So kann
 sichergestellt werden, dass zu einer Bestellung nur ein
-Rechnungs-Microservices eine Rechnung schreibt und ein
+Rechnungs-Microservice eine Rechnung schreibt und nur ein
 Lieferungs-Microservice eine Lieferung veranlasst.
 
 Der Lieferungs-Microservice und der Rechnungs-Microservice speichern
@@ -157,13 +156,13 @@ Bestellung mit Zusatz `created`, also beispielsweise `1created`.
 
 Eine Alternative wäre [Avro](http://avro.apache.org/). Das ist ein
 Datenformat, das ein binäres Protokoll anbietet aber auch eine
-JSON-basierte Repräsentation.  Avro hat ein Schema. Dabei ist es zum
+JSON-basierte Repräsentation. Avro hat ein Schema. Dabei ist es zum
 Beispiel mit Vorgabewerten auch möglich, Daten von einer alten Version
-des Schemas in eine neue Version des Schema zu konvertieren. Dadurch
+des Schemas in eine neue Version des Schemas zu konvertieren. Dadurch
 können alte Events selbst dann noch verarbeitet werden, wenn das
 Schema sich mittlerweile geändert hat.
 
-## Alternatives Rezepte: Atom
+## Alternatives Rezept: Atom
 
 Synchrone Microservices kann man auch mit REST umsetzen. So ist es zum
 Beispiel möglich, Bestellungen als
@@ -176,10 +175,10 @@ Client muss dann regelmäßig das Atom-Dokument abholen und neue
 Einträge verarbeiten. Das ist nicht besonders effizient. Es kann aber
 durch HTTP-Caching optimiert werden. Dann werden nur Daten übertragen,
 wenn wirklich neue Einträge vorliegen. Eine Paginierung kann außerdem
-dafür sorgen, dass nur die neusten Einträge übertragen werden und
+dafür sorgen, dass nur die neuesten Einträge übertragen werden und
 nicht etwa alle.
 
-Ein Beispiel für eine asynchrone Integration von Microservice mit Atom
+Ein Beispiel für eine asynchrone Integration von Microservices mit Atom
 findet sich unter
 <https://github.com/ewolff/microservice-atom>. <https://github.com/ewolff/microservice-atom/blob/master/WIE-LAUFEN.md>
 erläutert im Detail die einzelnen Schritte, um das Beispiel ablaufen
@@ -192,15 +191,15 @@ auch bei großen Datenmengen eher sichergestellt werden.
 
 Leider kann diese Art der Kommunikation aber nicht dafür sorgen, dass
 eine Bestellung nur von einer Microservice-Instanz empfangen und
-bearbeitet wird. Wenn einer der Microservices-Instanzen im Beispiel
+bearbeitet wird. Wenn eine der Microservices-Instanzen im Beispiel
 eine neue
-Bestellung aus dem Atom-Feed ausliest, dann überprüft er zunächst in
-der Datenbank zunächst, ob es schon einen Eintrag für diese Bestellung
-gibt, und erzeugt nur selber einen Eintrag, wenn das nicht der Fall ist. So
+Bestellung aus dem Atom-Feed ausliest, dann überprüft sie zunächst in
+der Datenbank, ob es schon einen Eintrag für diese Bestellung
+gibt, und erzeugt nur dann selber einen Eintrag, wenn das nicht der Fall ist. So
 wird für jede Bestellung nur ein Eintrag in der Datenbank erstellt.
 
-Es ist übrigens nicht zwingend, das Atom-Format zu nutzen, Genauso gut
-kann man ein eigenes Format verwenden, dass die Änderungen als Liste
+Es ist übrigens nicht zwingend, das Atom-Format zu nutzen. Genauso gut
+kann man ein eigenes Format verwenden, das die Änderungen als Liste
 zur Verfügung stellt und dann Details unter Links zur Verfügung stellt.
 
 #### Andere MOMs
@@ -218,14 +217,14 @@ Events nach einiger Zeit nicht mehr zur Verfügung stehen.
 
 ## Fazit
 
-Asynchrone Microservice bieten Vorteile bei der Resilience aber auch
+Asynchrone Microservices bieten Vorteile bei der Resilience aber auch
 bei der Entkopplung. Kafka ist eine interessante Alternative für
 asynchrone Microservices, weil die Historie der Events auch
-langfristig gespeichert wird. Außerdem können dadurch auch eine
-Vielzahl von Client unterstützt werden, ohne dass es allzu viele
+langfristig gespeichert wird. Außerdem kann dadurch auch eine
+Vielzahl von Clients unterstützt werden, ohne dass es allzu viele
 Ressourcen verbraucht.
 
-Ein HTTP/REST basiertes System, dass Änderungen als Atom-Feed oder in
+Ein HTTP/REST basiertes System, das Änderungen als Atom-Feed oder in
 einem anderen Datenformat anbietet, hat gegenüber Kafka den Vorteil,
 dass es keinen zusätzlichen Server benötigt. Dafür ist es nicht ganz
 so einfach, eine Nachricht nur an einen Empfänger zu schicken, weil
@@ -236,7 +235,7 @@ dafür das Protokoll keine eigene Unterstützung mitbringt.
 * Starte das Kafka-Beispiel. Siehe dazu
 <https://github.com/ewolff/microservice-kafka/blob/master/WIE-LAUFEN.md>.
 
-* Es ist möglich, mehr Instanzen des Shipping- oder
+* Es ist möglich, mehrere Instanzen des Shipping- oder
   Invoicing-Microservice zu starten. Dazu kann `docker-compose up -d
   ---scale shipping=2` oder `docker-compose up -d ---scale
   invoicing=2` dienen. Mit
