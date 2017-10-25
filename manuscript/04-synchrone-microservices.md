@@ -8,12 +8,12 @@ Technologien umgesetzt werden können.
 
 Das letzte Kapitel hat synchrone Microservices bereits definiert:
 
-> Ein Microservices ist synchron, wenn er bei der Bearbeitung von
+> Ein Microservice ist synchron, wenn er bei der Bearbeitung von
 > Requests selber einen Request an andere Microservices stellt und auf
 > das Ergebnis wartet.
 
 Also kann ein synchroner Bestellungs-Microservice von einem anderen
-Microservice Kundendaten abholen, während er eine Request für eine
+Microservice Kundendaten abholen, während er einen Request für eine
 Bestellung bearbeitet.
 
 ## Warum synchrone Microservices?
@@ -26,15 +26,15 @@ anderen Microservice aufgerufen. Das entspricht dem, was
 Programmierer gewohnt sind.
 
 * Es kann eine bessere *Konsistenz* erreicht werden. Wenn bei jedem
-  Aufruf die neusten Informationen aus den anderen Services geholt
+  Aufruf die neuesten Informationen aus den anderen Services geholt
   werden, dann sind die Daten aktuell und entsprechen den
   Informationen der anderen Microservices, wenn nicht in letzter
   Sekunde noch eine Änderung eingetreten ist.
 
 Dafür ist *Resilience* aufwändiger: Wenn der aufgerufene
 Microservice gerade nicht zur Verfügung steht, muss der Aufrufer 
-mit dem Ausfall so umgehen, dass der Aufrufer nicht ebenfalls
-ausfällt. Also kann der Aufrufer Daten aus einem Cache nutzen oder auf
+mit dem Ausfall so umgehen, dass er nicht ebenfalls
+ausfällt. Dazu kann der Aufrufer Daten aus einem Cache nutzen oder auf
 einen vereinfachten Algorithmus zurückgreifen, der die
 Informationen aus dem anderen Microservice nicht benötigt.
 
@@ -72,7 +72,7 @@ Entwicklung und den Betrieb von Microservices immer wichtiger.
 
 Kubernetes basiert auf [Docker](https://www.docker.com/). Docker
 erlaubt es, in einem Linux-System Prozesse stärker voneinander zu
-entkoppeln: *Docker Container* bieten eine Prozess ein eigenes
+entkoppeln: *Docker Container* bieten einen Prozess, ein eigenes
 Datei-System und ein eigenes Netzwerk-Interface mit einer eigenen
 IP-Adresse. Im Gegensatz zu einer virtuellen Maschine nutzen aber alle
 Docker Container denselben Linux Kernel. So ist ein Docker Container
@@ -83,7 +83,7 @@ Die Dateisysteme der Docker Container basieren auf *Docker
 Images*. Die Images
 enthalten alle Dateien, die der Docker Container benötigt. Dazu kann
 eine Linux Distribution zählen oder auch eine
-Java-Laufzeitumgebung. Docker Images haben Schichte. Die
+Java-Laufzeitumgebung. Docker Images haben Schichten. Die
 Linux Distribution kann eine Schicht sein und die
 Java-Laufzeitumgebung
 eine weitere. Alle Java-Microservices können sich diese beiden
@@ -112,7 +112,7 @@ Konzepte ein:
   sein.
 
 * Ein *Replica Set* sorgt dafür, dass immer von jedem Pod eine
-bestimmte Anzahl Instanzen laufen.
+bestimmte Anzahl Instanzen läuft.
 
 * Ein *Deployment* erstellt ein Replica Set und stellt dafür die
   benötigten Docker Images zur Verfügung.
@@ -127,13 +127,13 @@ bestimmte Anzahl Instanzen laufen.
 Die Grafik zeigt die Kubernetes-Konzepte im Überblick: Das Deployment
 erzeugt ein Replica Set. Das Replica Set erzeugt nicht nur die
 Kubernetes Pods, sondern startet auch neue, falls einige der Pods
-ausfallen. Die Pods umfassen einen oder mehrere Docker
+ausfallen. Die Pods umfassen einen oder mehrere Docker Container.
 
-Die Service erstellt den DNS-Eintrag und macht den Microservice unter
+Der Service erstellt den DNS-Eintrag und macht den Microservice unter
 einer IP-Adresse verfügbar, die im gesamten Cluster eindeutig
 ist. Schließlich erstellt der Server einen *Node Port*. Unter diesem
-Port kann der Service auf alle Kubernetes-Nodes erreicht werden. Statt
-einem Node Port kann eine Service auch einen *Load Balancer*
+Port kann der Service auf allen Kubernetes-Nodes erreicht werden. Statt
+einem Node Port kann ein Service auch einen *Load Balancer*
 erstellen. Das ist ein Load Balancer, der von der Infrastruktur
 angeboten wird. Wenn Kubernetes in der Amazon Cloud läuft, würde
 Kubernetes einen Amazon Elastic Load Balancer erstellen.
@@ -169,8 +169,8 @@ synchroner Microservices bietet, führen zu keinen Code-Abhängigkeiten
 zu Kubernetes. Wenn ein Microservice einen anderen
 aufruft, muss er den Namen aus dem DNS auslesen und kommuniziert mit
 der zurückgegebenen IP-Adresse. Das unterscheidet sich nicht von der
-Kommunikation mit einem beliebigen anderen Server. Bei Routing nutzt
-ein externes System einen Port auf eine Kubernetes Host oder einen
+Kommunikation mit einem beliebigen anderen Server. Beim Routing nutzt
+ein externes System einen Port auf einem Kubernetes Host oder einen
 Load Balancer. Auch in diesem Fall ist transparent, dass hinter den
 Kulissen Kubernetes am Werk ist.
 
@@ -220,7 +220,7 @@ auf das Replica Set zugreift und so IP-Adresse, Node Port bzw. Load
 Balancer und DNS-Eintrag erstellt.
 
 Dieser Ausschnitt aus `kubernetes-deploy.sh`  zeigt die 
-Nutzung der Werkzeuge am Beispiel des Catalog-Microservices:
+Nutzung der Werkzeuge am Beispiel des Catalog-Microservice:
 
 ~~~~~~~~
 #!/bin/sh
@@ -246,8 +246,8 @@ Außer Kubernetes gibt es einige weitere Lösungen für synchrone Microservices:
   notwendig, selber Docker Container zu erstellen. Es reicht aus, eine
   Java-Anwendung anzubieten.
   - *Service Discovery* setzt Cloud Foundry ebenfalls mit DNS um.
-  - Die Plattform implementer *Load Balancing* auf Netzwerk-Ebene.
-  - Für das *Routing*  von Zugriffen von außen reicht ebenfalls ein
+  - Die Plattform implementiert *Load Balancing* auf Netzwerk-Ebene.
+  - Für das *Routing*  von Zugriffen von außen reicht ebenfalls
     der DNS-Name des Microservice.
   - *Resilience* unterstützt Cloud Foundry nicht direkt.
 
@@ -261,7 +261,7 @@ Außer Kubernetes gibt es einige weitere Lösungen für synchrone Microservices:
   lässt sich allerdings mit einigen anderen Technologien zu einer
   vollständigen Lösung für Microservices ausbauen.
   - Für *Service Discovery* bietet Consul ebenfalls eine
-    DNS-Schnittstelle, aber auch eine eigen Schnittstelle, mit der
+    DNS-Schnittstelle, aber auch eine eigene Schnittstelle, mit der
     Service-Discovery-Informationen eingetragen und ausgelesen werden
     können. 
   - Für das *Routing* bietet Consul selber keine Lösung. Aber
@@ -313,7 +313,7 @@ Außer Kubernetes gibt es einige weitere Lösungen für synchrone Microservices:
 
 Die Beispiele Kubernetes und Cloud Foundry haben keine
 Code-Abhängigkeiten. So eine Lösung ist mit Consul ebenfalls
-implementierbar. Dadurch kann in den Microservices-Systemen auch
+implementierbar. Dadurch können in den Microservice-Systemen auch
 andere Technologien als Java genutzt werden. Das unterstützt die
 Technologie-Freiheit.
 
@@ -322,11 +322,11 @@ Technologie-Freiheit.
 Kubernetes bietet eine sehr mächtige Lösung für die Implementierung
 von synchronen Microservices, die außerdem den Betrieb
 der Microservices abdeckt. PaaS
-wie Cloud Foundry können bieten eine höhere Abstraktion,
-sodass der Nutzer sich nicht mit Docker auseinandersetzen muss. Aber
+wie Cloud Foundry bieten eine höhere Abstraktion,
+so dass der Nutzer sich nicht mit Docker auseinandersetzen muss. Aber
 sowohl Kubernetes als auch Cloud Foundry erzwingen eine andere
 Ablaufumgebung. Das ist bei Consul und Netflix nicht so: Beide Systeme
-können in Docker Container wie auch auf virtuellen Maschinen oder
+können in Docker Containern wie auch auf virtuellen Maschinen oder
 physischen Servern betrieben werden. Consul bietet dabei wesentlich
 mehr Features.
 
