@@ -72,7 +72,8 @@ Entwicklung und den Betrieb von Microservices immer wichtiger.
 
 Kubernetes basiert auf [Docker](https://www.docker.com/). Docker
 erlaubt es, in einem Linux-System Prozesse stärker voneinander zu
-entkoppeln: *Docker Container* bieten einen Prozess, ein eigenes
+entkoppeln: *Docker Container* bieten einem Betriebssystem-Prozess ein
+eigenes
 Datei-System und ein eigenes Netzwerk-Interface mit einer eigenen
 IP-Adresse. Im Gegensatz zu einer virtuellen Maschine nutzen aber alle
 Docker Container denselben Linux Kernel. So ist ein Docker Container
@@ -129,7 +130,7 @@ erzeugt ein Replica Set. Das Replica Set erzeugt nicht nur die
 Kubernetes Pods, sondern startet auch neue, falls einige der Pods
 ausfallen. Die Pods umfassen einen oder mehrere Docker Container.
 
-Der Service erstellt den DNS-Eintrag und macht den Microservice unter
+Der Kubernetes Service erstellt den DNS-Eintrag und macht den Microservice unter
 einer IP-Adresse verfügbar, die im gesamten Cluster eindeutig
 ist. Schließlich erstellt der Server einen *Node Port*. Unter diesem
 Port kann der Service auf allen Kubernetes-Nodes erreicht werden. Statt
@@ -153,7 +154,7 @@ folgendermaßen:
   Service-Instanzen umgeleitet.
 
 * Beim *Routing* kann der Kubernetes-Service entweder über den Node
-  Port oder über einen Load Balancer. Das hängt davon ab, wie der
+  Port oder über einen Load Balancer erreicht werden. Das hängt davon ab, wie der
   Service konfiguriert ist und ob die Infrastruktur einen Load
   Balancer anbietet. Ein externer Nutzer kann entweder auf den Load
   Balancer oder auf den Node Port zugreifen und so den Microservice
