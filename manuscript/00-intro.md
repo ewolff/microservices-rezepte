@@ -7,7 +7,7 @@ dass der Text jeden Ansatz *praktisch* beschreibt und eine
 Leser für sein Projekt mehrere Rezepte *kombinieren*, wie er es für ein
 Menü für ein mehrgängiges Essen auch tun müsste. Und schließlich gibt
 es zu jedem Rezept *Variationen und Alternativen*.
-*Experimente* laden dazu ein, sich selber mit den Beispielen zu
+*Experimente* laden dazu ein, sich selbst mit den Beispielen zu
 beschäftigen.
 
 Der Code für die Beispiele liegt auf Github. Es gibt eine
