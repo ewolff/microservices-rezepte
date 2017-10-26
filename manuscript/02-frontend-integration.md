@@ -200,7 +200,7 @@ von Schäden `crimson-damage` und zum REST-Backend-Simulator
 mit Hilfe von ca. 50 Zeilen JavaScript eine Client-seitige Integration
 implementiert, so dass die Postbox auch in das Portal eingeblendet
 werden kann.  Alle diese Anwendungen haben ein einheitliches Look &
-Fell, das durch gemeinsam genutzte Assets im Projekt
+Feel, das durch gemeinsam genutzte Assets im Projekt
 `crimson-styleguide` unterstützt wird.
 Die Assets werden als Library beim Build in die Projekte integriert.
 
@@ -221,6 +221,13 @@ irgendwelcher Fehler nicht ausgeführt werden kann oder die verlinkte
 Seite nicht zur Verfügung steht, funktioniert das System dennoch: Es
 wird einfach ein Link angezeigt, statt dass die Postbox
 eingeblendet wird.
+
+Da die Client-seitige Integration bei beiden Beispielen in jQuery
+implementiert ist, muss jedes System dieses JavaScript-Bibliothek
+integrieren und zwar in einer Version, mit der diese Integration
+funktioniert. Das führt zu eine Beschränkung der
+Technologie-Freiheit. Eine Implementierung mit reinem JavaScript wäre
+diesbezüglich besser.
 
 ## Fazit
 
