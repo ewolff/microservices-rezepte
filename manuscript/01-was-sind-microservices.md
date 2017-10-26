@@ -1,8 +1,8 @@
-# Was sind Microservices?
+# Grundlagen: Microservices
 
 Der Begriff Microservice ist leider nicht einheitlich definiert, so
-dass eine diese Broschüre zunächst Microservices und ander
-Grundlegenden Ideen darstellen muss.
+dass diese Broschüre zunächst Microservices und andere
+grundlegenden Ideen darstellen muss.
 
 ## Independent-Systems-Architecture-Prinzipien (ISA) 
 
@@ -82,7 +82,7 @@ oder High
 / Low Coupling für Microservices übernommen werden. Neu ist bei
 Microservices die Umsetzung als separate Container (Prinzip 2). Das
 erlaubt mehr Freiheit bei der technischen Umsetzung der Module, die
-jedoch mindestens soweit eingeschränkt werden muss, dass man noch von
+jedoch mindestens so weit eingeschränkt werden muss, dass man noch von
 einem Gesamtsystem sprechen kann (Prinzip 3). Also müssen Integration
 (Prinzip 4) und Kommunikation (Prinzip 5) standardisiert sein, weil
 das System sonst in mehrere Inseln zerfällt.

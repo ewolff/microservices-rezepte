@@ -1,4 +1,4 @@
-# Asynchrone Microservices
+# Konzept: Asynchrone Microservices
 
 Microservices können Nachrichten austauschen. Asynchrone
 Kommunikation erlaubt eine lose Kopplung und eine gute Resilience.
@@ -58,7 +58,7 @@ Asynchrone Microservices haben einige Vorteile:
   bereits vorhandenen Event reagieren. So ist das System sehr
   leicht erweiterbar.
 
-## Rezept: Kafka
+## Rezept: Messaging mit Kafka
 
 Kafka ist ein Beispiel für eine Message-oriented Middleware (MOM). Ein
 MOM verschickt Nachrichten und stellt sicher, dass die Nachrichten
@@ -162,7 +162,7 @@ des Schemas in eine neue Version des Schemas zu konvertieren. Dadurch
 können alte Events selbst dann noch verarbeitet werden, wenn das
 Schema sich mittlerweile geändert hat.
 
-## Alternatives Rezept: Atom
+## Alternatives Rezept: REST mit Atom
 
 Synchrone Microservices kann man auch mit REST umsetzen. So ist es zum
 Beispiel möglich, Bestellungen als
@@ -200,7 +200,10 @@ wird für jede Bestellung nur ein Eintrag in der Datenbank erstellt.
 
 Es ist übrigens nicht zwingend, das Atom-Format zu nutzen. Genauso gut
 kann man ein eigenes Format verwenden, das die Änderungen als Liste
-zur Verfügung stellt und dann Details unter Links zur Verfügung stellt.
+zur Verfügung stellt und dann Details unter Links zur Verfügung
+stellt. Ebenso kann ein anderes Feed-Format wie
+[RSS](http://web.resource.org/rss/1.0/spec) oder
+[JSON Feed](http://jsonfeed.org/) genutzt werden.
 
 #### Andere MOMs
 

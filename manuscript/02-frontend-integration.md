@@ -1,4 +1,4 @@
-# Frontend-Integration
+# Konzept: Frontend-Integration
 
 Microservices können ein Web-Frontend enthalten. Self-contained
 Systems müssen sogar ein Web-Frontend haben. Daher können Microservices

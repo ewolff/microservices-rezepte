@@ -1,4 +1,4 @@
-# Synchrone Microservices
+# Konzept: Synchrone Microservices
 
 Viele Microservice-Systeme setzen synchrone Kommunikation ein. Dieses
 Kapitel zeigt, wie synchrone Microservices mit verschiedenen

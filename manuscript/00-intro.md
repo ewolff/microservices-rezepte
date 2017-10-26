@@ -1,6 +1,8 @@
 # Einführung
 
-Diese Broschüre gibt einen Überblick über verschiedene Rezepte zur
+Diese Broschüre führt die Begriffe Microservice und Self-contained
+System ein. Dann gibt es einen Überblick über verschiedene Konzepte
+und Rezepte zur
 Implementierung von Microservices. Die Rezept-Metapher drückt aus,
 dass der Text jeden Ansatz *praktisch* beschreibt und eine
 *Implementierung als Beispiel* zur Verfügung steht. Außerdem muss der
