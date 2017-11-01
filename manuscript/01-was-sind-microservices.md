@@ -8,13 +8,13 @@ grundlegenden Ideen darstellen muss.
 
 [ISA](http://isa-principles.org) (Independent Systems Architecture)
 ist eine Sammlung von grundlegenden Prinzipien für Microservices. Sie
-basiert auf Erfahrung mit den Herausforderungen von Microservices in
+basiert auf Erfahrung mit Microservices in
 vielen verschiedenen Projekten.
 
 ## Bedingungen
 
-Bei den Prinzipien wird *muss* verwendet für Prinzipien, die unbedingt eingehalten werden
-müssen. *Sollte* beschreibt Prinzipien, die viele Vorteile haben, aber
+Bei den Prinzipien wird *"muss"* verwendet für Prinzipien, die unbedingt eingehalten werden
+müssen. *"Sollte"* beschreibt Prinzipien, die viele Vorteile haben, aber
 nicht unbedingt eingehalten werden müssen.
 
 Die ISA-Prinzipien sprechen von einem *System*. Die IT-Landschaft
@@ -27,19 +27,19 @@ implementiert sein.
 1. Das System muss in *Module* unterteilt werden, die
 *Schnittstellen* bieten. Der Zugriff auf andere Module ist nur über
 diese Schnittstellen möglich. Module dürfen daher nicht direkt von den
-internen Datenmodellen eines anderen Moduls z.B. in
-der Datenbank abhängen.
+Implementierungsdetails eines anderen Moduls abhängen wie z.B. dem
+Datenmodellen in der Datenbank.
 
-2. Module sollten *separate Prozesse, Container oder
+2. Module müssen *separate Prozesse, Container oder
 virtuelle Maschinen* sein, um die Unabhängigkeit zu maximieren.
 
 3. Das System muss zwei klar getrennte Ebenen von
 Architekturentscheidungen haben:
-   * Die *Makro-Architektur* umfasst Entscheidungen, die alle
-   Module betreffen. Alle weiteren Prinzipien sind Teil der
+   * Die *Makro-Architektur* umfasst Entscheidungen, die alle
+   Module betreffen. Alle weiteren Prinzipien sind Teil der
    Makro-Architektur.
-   * Die *Mikro-Architektur* sind jene Entscheidungen, die für
-  jedes Modul anders getroffen werden können.
+   * Die *Mikro-Architektur* sind jene Entscheidungen, die für
+   jedes Modul anders getroffen werden können.
 
 4. Die Wahl der *Integrations-Optionen* muss für das System begrenzt
 und standardisiert sein. Die Integration kann mit synchroner oder
