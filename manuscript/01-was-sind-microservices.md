@@ -36,10 +36,12 @@ virtuelle Maschinen* sein, um die Unabhängigkeit zu maximieren.
 3. Das System muss zwei klar getrennte Ebenen von
 Architekturentscheidungen haben:
    * Die *Makro-Architektur* umfasst Entscheidungen, die alle
-   Module betreffen. Alle weiteren Prinzipien sind Teil der
-   Makro-Architektur.
+   Module betreffen.
    * Die *Mikro-Architektur* sind jene Entscheidungen, die für
    jedes Modul anders getroffen werden können.
+
+     Alle weiteren Prinzipien ab Punkt 4 sind Teil der
+     Makro-Architektur.
 
 4. Die Wahl der *Integrations-Optionen* muss für das System begrenzt
 und standardisiert sein. Die Integration kann mit synchroner oder
