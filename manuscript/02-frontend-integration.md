@@ -111,9 +111,9 @@ der Varnish ausgibt.
 <head>
 ...
   <link rel="stylesheet"
-   href="/common/bootstrap-3.3.7/bootstrap.min.css" />
+   href="/common/bootstrap-3.3.7/bootstrap.css" />
   <link rel="stylesheet"
-   href="/common/bootstrap-3.3.7/bootstrap-theme.min.css" />
+   href="/common/bootstrap-3.3.7/bootstrap-theme.css" />
 </head>
 
 <body>
@@ -124,7 +124,8 @@ der Varnish ausgibt.
     Mon Sep 18 2017 17:52:01 </div></div>
     ...
   </div>
-  <script src="/common/bootstrap-3.3.7/bootstrap.min.js" />
+  <script
+   src="/common/bootstrap-3.3.7/bootstrap.js" />
 </body>
 </html>
 ~~~~~~~~
@@ -196,7 +197,10 @@ Dieses Beispiel implementiert eine Anwendung für einen Sachbearbeiter
 einer Versicherung. Die Hauptanwendung `crimson-portal` hat Links
 zu den Anwendungen zum Brief-Schreiben `crimson-letter`, für das Melden
 von Schäden `crimson-damage` und zum REST-Backend-Simulator
-`crimson-backend`. Nur für die Integration der Postbox wird zusätzlich
+`crimson-backend`. Diese Links übergeben als Parameter Informationen
+wie die Vertrags-ID.
+
+Nur für die Integration der Postbox wird zusätzlich
 mit Hilfe von ca. 50 Zeilen JavaScript eine Client-seitige Integration
 implementiert, so dass die Postbox auch in das Portal eingeblendet
 werden kann.  Alle diese Anwendungen haben ein einheitliches Look &
