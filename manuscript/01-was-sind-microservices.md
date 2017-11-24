@@ -27,7 +27,7 @@ implementiert sein.
 1. Das System muss in *Module* unterteilt werden, die
 *Schnittstellen* bieten. Der Zugriff auf andere Module ist nur über
 diese Schnittstellen möglich. Module dürfen daher nicht direkt von den
-Implementierungsdetails eines anderen Moduls abhängen wie z.B. dem
+Implementierungsdetails eines anderen Moduls abhängen, wie z.B. dem
 Datenmodellen in der Datenbank.
 
 2. Module müssen *separate Prozesse, Container oder
@@ -53,8 +53,8 @@ müssen standardisiert sein.
 
 6. Jedes Modul muss seine *eigene unabhängige
 Continuous-Delivery-Pipeline* haben. Tests sind Teil der
-Continuous-Delivery-Pipeline, so dass die Tests der Module
-unabhängig sein müssen.
+Continuous-Delivery-Pipeline, folglich müssen die Tests der Module
+unabhängig sein.
 
 7. *Betrieb* sollte standardisiert werden. Dies beinhaltet
 Konfiguration, Deployment, Log-Analyse, Tracing, Monitoring und
@@ -98,7 +98,7 @@ gerade bei einer großen Anzahl an Microservices. Aber die Standards
 dürfen nicht die Technologie-Freiheit beschneiden und daher nur an der
 Schnittstelle ansetzen (Prinzip 8). Ein Microservices-System wird
 vielleicht nicht von Anfang an viele unterschiedliche Technologien
-nutzen, aber man sollte sich die Möglichkeit dazu freihalten, um bei
+nutzen, aber man sollte sich die Möglichkeit dazu offenhalten, um bei
 der Weiterentwicklung besser aufgestellt zu sein.
 
 Microservices sind ein verteiltes System. Das erhöht die
@@ -117,7 +117,7 @@ sich unter <http://isa-principles.org/>.
 ## Self-contained Systems
 
 Die ISA-Prinzipien definieren wichtige Prinzipien für
-Microservices, aber lassen bewusst Fragen offen wie beispielsweise die
+Microservices, aber lassen bewusst Fragen offen, wie beispielsweise die
 Organisation, die fachliche Aufteilung oder ob Microservices eine UI
 enthalten sollen oder nicht.
 

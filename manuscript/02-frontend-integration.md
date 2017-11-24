@@ -26,7 +26,7 @@ Dank Frontend-Integration ist für eine Funktionalität *alle Logik in
 einem Microservice* implementiert. Beispielsweise kann ein Microservice
 dafür verantwortlich sein, eingegangene Nachrichten anzuzeigen, selbst
 wenn die Nachrichten in der UI eines anderen Microservice integriert
-dargestellt wird. Wenn weitere Informationen wie beispielsweise eine
+dargestellt wird. Wenn weitere Informationen, wie beispielsweise eine
 Priorität angezeigt werden sollen, kann die Logik, die Datenhaltung
 und auch die Darstellung durch Änderung von nur einem Microservice
 umgesetzt werden, selbst wenn ein anderer Microservice die Darstellung
@@ -111,9 +111,9 @@ der Varnish ausgibt.
 <head>
 ...
   <link rel="stylesheet"
-   href="/common/css/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+   href="/common/bootstrap-3.3.7/bootstrap.min.css" />
   <link rel="stylesheet"
-   href="/common/css/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" />      
+   href="/common/bootstrap-3.3.7/bootstrap-theme.min.css" />
 </head>
 
 <body>
@@ -124,7 +124,7 @@ der Varnish ausgibt.
     Mon Sep 18 2017 17:52:01 </div></div>
     ...
   </div>
-  <script src="/common/css/bootstrap-3.3.7-dist/js/bootstrap.min.js" />
+  <script src="/common/bootstrap-3.3.7/bootstrap.min.js" />
 </body>
 </html>
 ~~~~~~~~
@@ -225,7 +225,7 @@ eingeblendet wird.
 Da die Client-seitige Integration bei beiden Beispielen in jQuery
 implementiert ist, muss jedes System dieses JavaScript-Bibliothek
 integrieren und zwar in einer Version, mit der diese Integration
-funktioniert. Das führt zu eine Beschränkung der
+funktioniert. Das führt zu einer Beschränkung der
 Technologie-Freiheit. Eine Implementierung mit reinem JavaScript wäre
 diesbezüglich besser.
 
@@ -237,10 +237,11 @@ verlinkten Seiten kennen. Wenn eine Web-Seite aus Fragmenten
 verschiedener Systeme zusammengesetzt werden soll, dann kann die dafür
 notwendige Integration auf dem Server erfolgen. Mit einem Cache kann
 ESI genutzt werden. Durch den Cache können HTML-Fragmente im Cache
-abgelegt werden. Das kommt Performance und Resilience zu
-Gute. Webserver können SSI implementieren. Wenn bereits ein Webserver im
+abgelegt werden. Das kommt der Performance und der Resilience
+zugute. Webserver können SSI implementieren. Wenn bereits ein
+Webserver im
 Einsatz ist, dann kann so die zusätzliche Infrastruktur eines Caches
-eingespart werden. Und schließlich kann Client-seitige Integration
+eingespart werden. Und schließlich kann eine Client-seitige Integration
 optionale Inhalte nachladen, wie beispielsweise den Überblick über die
 Postbox.
 
