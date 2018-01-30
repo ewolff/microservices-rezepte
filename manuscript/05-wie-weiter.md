@@ -14,7 +14,7 @@ Mittelpunkt des
 es auch als [englische Übersetzung](http://microservices-book.com/).
 
 Schließlich bietet der
-[Microservices Überblick](http://microservices-book.com/primer.html)
+[Microservices Überblick](http://microservices-buch.de/ueberblick.html)
 oder die
 [englische Übersetzung](http://microservices-book.com/primer.html)
 einen kostenlosen Einblick in die grundlegende Motivation und
