@@ -164,7 +164,7 @@ Schema sich mittlerweile geändert hat.
 
 ## Alternatives Rezept: REST mit Atom
 
-Synchrone Microservices kann man auch mit REST umsetzen. So ist es zum
+Asynchrone Microservices kann man auch mit REST umsetzen. So ist es zum
 Beispiel möglich, Bestellungen als
 [Atom-Feed](https://validator.w3.org/feed/docs/atom.html)
 anzubieten. Atom ist ein Datenformat, das ursprünglich entwickelt

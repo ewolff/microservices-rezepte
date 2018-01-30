@@ -229,7 +229,7 @@ if [ -z "$DOCKER_ACCOUNT" ]; then
   DOCKER_ACCOUNT=ewolff
 fi;
 ...
-kubectl run apache \\
+kubectl run catalog \\
  --image=docker.io/$DOCKER_ACCOUNT/microservice-kubernetes-demo-catalog:latest
   \\
  --port=80
@@ -250,7 +250,7 @@ Außer Kubernetes gibt es einige weitere Lösungen für synchrone Microservices:
   - Die Plattform implementiert *Load Balancing* auf Netzwerk-Ebene.
   - Für das *Routing*  von Zugriffen von außen reicht ebenfalls
     der DNS-Name des Microservice.
-  - *Resilience* unterstützt Cloud Foundry nicht direkt.
+  - Wie Kubernetes auch, unterstützt Cloud Foundry *Resilience* nicht wirklich.
 
     Die
     [Cloud-Foundry-Demo](https://github.com/ewolff/microservice-cloudfoundry)
@@ -290,7 +290,10 @@ Außer Kubernetes gibt es einige weitere Lösungen für synchrone Microservices:
     [Registrator](https://github.com/gliderlabs/registrator), das
     Docker Container in Consul registrieren kann. Zusammen mit einem
     Zugriff auf Consul über DNS könnte Consul genauso transparent
-    genutzt werden wie Kubernetes oder Cloud Foudnry.
+    genutzt werden wie Kubernetes oder Cloud Foundry.
+	Das
+    [Consul DNS Beispiel](https://github.com/ewolff/microservice-consul-dns/)
+    implementiert diesen Ansatz,
 
 
 * Der *Netflix Stack* stellt eine vollständige Lösung für synchrone
@@ -333,10 +336,10 @@ mehr Features.
 
 ## Experimente
 
-* Starte das Beispiel wie unter 
+* Starte das Kubernetes-Beispiel wie unter 
  <https://github.com/ewolff/microservice-kubernetes/blob/master/WIE-LAUFEN.md>
  beschrieben.
-  * Öffne den Apache httpd mit `minikube service apache`.
+  * Öffne die Apache httpd Website mit `minikube service apache`.
   * Öffne das Kubernetes Dashboard mit `minikube dashboard`.
 
 * Teste das Load Balancing im Beispiel:

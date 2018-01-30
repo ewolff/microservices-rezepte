@@ -91,7 +91,7 @@ können.
 </html>
 ~~~~~~~~
 
-Der Order-Microservice gibt eine HTML-Seite wie in [Listing 1](listing-01)
+Der Order-Microservice gibt eine HTML-Seite wie in [Listing 1](#listing-01)
 aus. Eine solche Seite steht unter
 <http://localhost:8090/> zur Verfügung, wenn die Docker-Container auf
 dem lokalen Rechner laufen. Wenn man diese Seite im Browser ansieht,
@@ -102,7 +102,7 @@ Das Beispiel nutzt den Web-Cache [Varnish](https://varnish-cache.org/)
 als ESI-Implementierung. Der Common-Microservice ergänzt die
 Inhalte für die ESI-Tags. Der Varnish steht unter
 <http://localhost:8080/> bereit, wenn die Docker-Container auf dem
-lokalen Rechner laufen. [Listing 2](listing-02) zeigt das HTML, das
+lokalen Rechner laufen. [Listing 2](#listing-02) zeigt das HTML, das
 der Varnish ausgibt.
 
 {title="Listing 2: Vom Varnish ausgegebenes HTML", id="listing-02"}
