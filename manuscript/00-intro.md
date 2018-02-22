@@ -28,6 +28,6 @@ haben. Es sind viel zu viele, um sie alle zu nennen. Der Dialog hilft
 sehr und macht Spaß! 
 
 Viele der Ideen und auch die Umsetzungen sind ohne meine Kollegen bei
-der innoQ nicht denkbar.
+der INNOQ nicht denkbar.
 
 Danke an Jörn Hameister für das umfangreiche Feedback!

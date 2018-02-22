@@ -181,7 +181,7 @@ System, das SSI mit nginx zur Integration der Frontends nutzt.
 Einen ganz anderen Ansatz für Frontend-Integration nutzt das
 Crimson-Assurance-Beispiel. Das Beispiel ist als Prototyp entstanden,
 der zeigt, wie eine Web-Anwendung mit Frontend-Integration umgesetzt
-werden kann. Die beiden innoQ-Mitarbeitern Lucas Dohmen und
+werden kann. Die beiden INNOQ-Mitarbeitern Lucas Dohmen und
 Marc Jansing haben das Beispiel implementiert.
 
 ![Integration mit Links und JavaScript](images/links-javascript-ueberblick.png)
@@ -251,7 +251,7 @@ Postbox.
 
 Hörenswert ist auch
 [Frontend-Integrations-Episode](https://www.innoq.com/de/podcast/025-scs-frontend-integration/)
-des innoQ-Podcasts.
+des INNOQ-Podcasts.
 
 ## Experimente
 
