@@ -16,8 +16,8 @@ Ein weiterer Vorteil von Frontend-Integration ist die *freie Wahl der
 Frontend-Technologien*. Gerade bei Frontend-Technologien gibt es sehr viele
 Innovationen. Ständig gibt es neue JavaScript-Frameworks und
 neue Möglichkeiten, attraktive Oberflächen zu gestalten. Ein wichtiger
-Vorteil von Microservices ist die Technologiefreiheit. Jeder
-Microservice kann eigene Technologien wählen. Wenn Technologiefreiheit
+Vorteil von Microservices ist die Technologie-Freiheit. Jeder
+Microservice kann eigene Technologien wählen. Wenn Technologie-Freiheit
 auch für das Frontend gelten soll, dann muss jeder Microservice sein
 eigenes Frontend mitbringen, das eine eigene Technologie nutzen
 kann. Dazu müssen die Frontends geeignet integriert sein.
@@ -26,7 +26,7 @@ Dank Frontend-Integration ist für eine Funktionalität *alle Logik in
 einem Microservice* implementiert. Beispielsweise kann ein Microservice
 dafür verantwortlich sein, eingegangene Nachrichten anzuzeigen, selbst
 wenn die Nachrichten in der UI eines anderen Microservice integriert
-dargestellt wird. Wenn weitere Informationen, wie beispielsweise eine
+dargestellt werden. Wenn weitere Informationen wie beispielsweise eine
 Priorität angezeigt werden sollen, kann die Logik, die Datenhaltung
 und auch die Darstellung durch Änderung von nur einem Microservice
 umgesetzt werden, selbst wenn ein anderer Microservice die Darstellung
@@ -48,13 +48,13 @@ in einer dynamischen Website integriert sind. CDNs (Content Delivery
 Networks) können ebenfalls
 ESI implementieren. CDNs dienen eigentlich dazu, statische HTML-Seiten
 und Images auszuliefern. Dazu betreiben CDNs Server an
-Knotenpunkten im Internet, so dass jeder Nutzer die Seiten und Images
+Knotenpunkten im Internet, sodass jeder Nutzer die Seiten und Images
 von einem Server in der Nähe laden kann und die Ladezeiten reduziert
 werden.
 Mit ESI können die CDNs zumindest Fragmente dynamischer Seiten
 ebenfalls cachen.
 
-![ESI Konzept: HTML-Fragmente zu HTML-Seiten integrieren](images/esi-konzept.png)
+![ESI-Konzept: HTML-Fragmente zu HTML-Seiten integrieren](images/esi-konzept.png)
 
 Also setzt ESI eine HTML-Seite aus mehreren HTML-Fragmenten zusammen,
 die von verschiedenen Microservices geliefert werden können.
@@ -95,10 +95,10 @@ Der Order-Microservice gibt eine HTML-Seite wie in [Listing 1](#listing-01)
 aus. Eine solche Seite steht unter
 <http://localhost:8090/> zur Verfügung, wenn die Docker-Container auf
 dem lokalen Rechner laufen. Wenn man diese Seite im Browser ansieht,
-interpretiert der Browser die ESI-Tags nicht, so dass der Browser eine
-verstümmelte Web-Seite anzeigt.
+interpretiert der Browser die ESI-Tags nicht, sodass der Browser eine
+verstümmelte Webseite anzeigt.
 
-Das Beispiel nutzt den Web-Cache [Varnish](https://varnish-cache.org/)
+Das Beispiel nutzt den Webcache [Varnish](https://varnish-cache.org/)
 als ESI-Implementierung. Der Common-Microservice ergänzt die
 Inhalte für die ESI-Tags. Der Varnish steht unter
 <http://localhost:8080/> bereit, wenn die Docker-Container auf dem
@@ -136,16 +136,16 @@ eine Art Asset-Server: Er stellt gemeinsam genutzte Bibliotheken wie
 Bootstrap zur Verfügung.
 
 Bei einer neuen Version von Bootstrap muss nur das HTML-Fragment im
-Common-Microservice geändert werden und die neue Bootstrap-Version
+Common-Microservice geändert und die neue Bootstrap-Version
 durch den Common-Microservice ausgeliefert werden. In einem
 produktiven System ist das jedoch kaum wünschenswert, weil die
-Oberfläche des Order-Microservice sicher mit der neuen
+Oberfläche des Order-Microservices sicher mit der neuen
 Bootstrap-Version getestet werden muss.
 
 #### Caching und Resilience
 
 Da das System einen Varnish-Cache nutzt, werden die HTML-Fragmente
-gecacht und zwar 30 Sekunden lang. Das kann man an der eingeblendeten
+gecacht, und zwar 30 Sekunden lang. Das kann man an der eingeblendeten
 Zeit in der Navigationsleiste erkennen, die sich nur alle 30 Sekunden
 ändert. Wenn einer der Microservices 
 ausfällt, verlängert sich die Zeit für das Caching sogar auf 15
@@ -153,7 +153,7 @@ Minuten. Die Konfiguration für Varnish findet sich in der Datei `default.vcl` i
 Verzeichnis `docker/varnish/` im Beispiel.
 
 Der Varnish-Cache verbessert durch das Caching also nicht nur die
-Performance des Systems sondern auch die Resilience.
+Performance des Systems, sondern auch die Resilience.
 
 Bei einer Server-seitigen Integration wird immer die gesamte
 HTML-Seite mit allen Fragmenten ausgeliefert. Im Beispiel müssen
@@ -180,8 +180,8 @@ System, das SSI mit nginx zur Integration der Frontends nutzt.
 
 Einen ganz anderen Ansatz für Frontend-Integration nutzt das
 Crimson-Assurance-Beispiel. Das Beispiel ist als Prototyp entstanden,
-der zeigt, wie eine Web-Anwendung mit Frontend-Integration umgesetzt
-werden kann. Die beiden INNOQ-Mitarbeitern Lucas Dohmen und
+der zeigt, wie eine Webanwendung mit Frontend-Integration umgesetzt
+werden kann. Die beiden INNOQ-Mitarbeiter Lucas Dohmen und
 Marc Jansing haben das Beispiel implementiert.
 
 ![Integration mit Links und JavaScript](images/links-javascript-ueberblick.png)
@@ -201,9 +201,9 @@ von Schäden `crimson-damage` und zum REST-Backend-Simulator
 wie die Vertrags-ID.
 
 Nur für die Integration der Postbox wird zusätzlich
-mit Hilfe von ca. 50 Zeilen JavaScript eine Client-seitige Integration
-implementiert, so dass die Postbox auch in das Portal eingeblendet
-werden kann.  Alle diese Anwendungen haben ein einheitliches Look &
+mithilfe von ca. 50 Zeilen JavaScript eine Client-seitige Integration
+implementiert, sodass die Postbox auch in das Portal eingeblendet
+werden kann.  Alle diese Anwendungen haben ein einheitliches Look and
 Feel, das durch gemeinsam genutzte Assets im Projekt
 `crimson-styleguide` unterstützt wird.
 Die Assets werden als Library beim Build in die Projekte integriert.
@@ -211,7 +211,7 @@ Die Assets werden als Library beim Build in die Projekte integriert.
 Dieses Beispiel zeigt, wie weit man mit einer einfachen Integration
 mit Links kommt. Zudem zeigt auch dieses Beispiel die Integration
 sehr unterschiedlicher Systeme: Hauptanwendung, Brief und Schaden sind
-mit NodeJS implementiert, während die Postbox mit Java und Spring Boot
+mit Node.js implementiert, während die Postbox mit Java und Spring Boot
 implementiert ist.
 
 Ein weiteres Beispiel für die Client-seitige Integration ist
@@ -223,12 +223,12 @@ Beide Projekte nutzen Links. Die verlinkten Seiten werden durch
 JavaScript eingeblendet. Selbst wenn das JavaScript aufgrund
 irgendwelcher Fehler nicht ausgeführt werden kann oder die verlinkte
 Seite nicht zur Verfügung steht, funktioniert das System dennoch: Es
-wird einfach ein Link angezeigt, statt dass die Postbox
-eingeblendet wird.
+wird einfach ein Link angezeigt, anstatt die Postbox
+einzublenden.
 
 Da die Client-seitige Integration bei beiden Beispielen in jQuery
-implementiert ist, muss jedes System dieses JavaScript-Bibliothek
-integrieren und zwar in einer Version, mit der diese Integration
+implementiert ist, muss jedes System diese JavaScript-Bibliothek
+integrieren, und zwar in einer Version, mit der dieser Integrationscode
 funktioniert. Das führt zu einer Beschränkung der
 Technologie-Freiheit. Eine Implementierung mit reinem JavaScript wäre
 diesbezüglich besser.
@@ -237,7 +237,7 @@ diesbezüglich besser.
 
 Frontend-Integration führt zu einer sehr losen Kopplung. In vielen
 Fällen reichen Links aus. Dann müssen die Systeme nur die URLs der
-verlinkten Seiten kennen. Wenn eine Web-Seite aus Fragmenten
+verlinkten Seiten kennen. Wenn eine Webseite aus Fragmenten
 verschiedener Systeme zusammengesetzt werden soll, dann kann die dafür
 notwendige Integration auf dem Server erfolgen. Mit einem Cache kann
 ESI genutzt werden. Durch den Cache können HTML-Fragmente im Cache
@@ -249,7 +249,7 @@ eingespart werden. Und schließlich kann eine Client-seitige Integration
 optionale Inhalte nachladen, wie beispielsweise den Überblick über die
 Postbox.
 
-Hörenswert ist auch
+Hörenswert ist auch die
 [Frontend-Integrations-Episode](https://www.innoq.com/de/podcast/025-scs-frontend-integration/)
 des INNOQ-Podcasts.
 
@@ -258,14 +258,14 @@ des INNOQ-Podcasts.
 * Starte das ESI-Beispiel. Siehe
 <https://github.com/ewolff/SCS-ESI/blob/master/WIE-LAUFEN.md>.
 
-* Betrachte die Ausgabe des Varnish-Cache unter
+* Betrachte die Ausgabe des Varnish-Caches unter
   <http://localhost:8080/> und vergleiche ihn mit der Ausgabe des
-  Order-Microservice unter <http://localhost:8090/>. Wirf einen Blick
+  Order-Microservices unter <http://localhost:8090/>. Wirf einen Blick
   auf den Quelltext der zurückgegebenen HTML-Seiten mit dem
-  Browser. Wie kann man auf die HTML-Fragmente des Common-Microservice
+  Browser. Wie kann man auf die HTML-Fragmente des Common-Microservices
   zugreifen?
 
 * Probiere die Oberfläche aus. Stoppe die Microservices mit `docker-compose up --scale common=0`
 bzw. `docker-compose up --scale order=0`. Welche Teile der
-Microservices sind noch nutzbar?
+Microservice sind noch nutzbar?
 

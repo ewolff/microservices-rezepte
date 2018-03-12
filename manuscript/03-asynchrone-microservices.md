@@ -10,12 +10,12 @@ ab. Das nächste Kapitel beschreibt synchrone Microservices
 detailliert. Der Begriff "synchrone Microservices" steht für
 Folgendes:
 
-> Ein Microservice ist synchron, wenn er bei der Bearbeitung von
-> Requests selber einen Request an andere Microservices stellt und auf
-> das Ergebnis wartet.
+A> Ein Microservice ist synchron, wenn er bei der Bearbeitung von
+A> Requests selbst einen Request an andere Microservices stellt und auf
+A> das Ergebnis wartet.
 
 Asynchrone Microservices warten also nicht auf die Antworten anderer
-Systeme, wenn sie gerade selber einen Request bearbeiten. Dazu gibt es
+Systeme, wenn sie gerade selbst einen Request bearbeiten. Dazu gibt es
 zwei Möglichkeiten:
 
 * Der Microservice kommuniziert während der Bearbeitung eines Requests
@@ -42,7 +42,7 @@ Asynchrone Microservices haben einige Vorteile:
   bietet asynchrone Kommunikation *Resilience*, also eine Absicherung
   gegen den Ausfall von Teilen des Systems.
 
-* Die Übertragung und auch die Bearbeitung einer Nachricht kann fast
+* Die Übertragung und auch die Bearbeitung einer Nachricht können fast
   immer *garantiert* werden: Die Nachrichten werden langfristig
   gespeichert. Irgendwann werden sie bearbeitet. Dass sie bearbeitet
   werden, kann man beispielsweise absichern, indem die Empfänger die
@@ -50,7 +50,7 @@ Asynchrone Microservices haben einige Vorteile:
 
 * Asynchrone Microservices können *Events* implementieren. Events
   bieten eine fachliche Entkopplung. Ein Event könnte beispielsweise
-  "Bestellung eingegangen" sein. Jeder Microservice kann selber
+  "Bestellung eingegangen" sein. Jeder Microservice kann selbst
   entscheiden, wie er auf den Event reagiert. Beispielsweise kann ein
   Microservice eine Rechnung erstellen und ein anderer die Lieferung
   anstoßen. Wenn weitere Microservices beispielsweise für ein
@@ -60,10 +60,10 @@ Asynchrone Microservices haben einige Vorteile:
 
 ## Rezept: Messaging mit Kafka
 
-Kafka ist ein Beispiel für eine Message-oriented Middleware (MOM). Ein
+Kafka ist ein Beispiel für eine Message-oriented Middleware (MOM). Eine
 MOM verschickt Nachrichten und stellt sicher, dass die Nachrichten
 beim Empfänger ankommen. MOMs sind asynchron. Sie implementieren also
-kein Request / Reply wie bei synchronen Kommunikationsprotokollen
+kein Request / Reply wie bei synchronen Kommunikationsprotokollen,
 sondern verschicken nur Nachrichten.
 
 #### Grundlegende Kafka-Konzepte
@@ -119,43 +119,43 @@ die Installation und das Starten des Beispiels erläutert.
 
 ![Überblick über das Kafka-Beispiel](images/kafka-beispiel.png)
 
-Wenn die Docker Container auf der lokalen Maschine laufen, steht unter
-<http://localhost:8080/> eine Web-Oberfläche bereit. Die Oberfläche
+Wenn die Docker-Container auf der lokalen Maschine laufen, steht unter
+<http://localhost:8080/> eine Weboberfläche bereit. Die Oberfläche
 wird von einem Apache-httpd-Webserver angezeigt, der als Reverse Proxy
 auch HTTP-Anfragen an die Microservices weitergibt.
 
 ####  Aufteilung des Beispiels in Microservices
 
 Das System besteht aus einem Microservice `order`, der eine Bestellung
-über die Web-Oberfläche entgegennimmt. Die Bestellung schickt der
+über die Weboberfläche entgegennimmt. Die Bestellung schickt der
 Bestellprozess dann als Record über Kafka an den Microservice für den
 Versand `shipping` und den Microservice für die Erstellung der
 Rechnung `invoicing`. Die Bestellung wird als JSON übertragen. So
-können der Rechnungs-Microservice und der Lieferungs-Microservice aus
+können der Rechnungs-Microservice und der Versand-Microservice aus
 der Datenstruktur jeweils die Daten auslesen, die für den jeweiligen
 Microservice relevant sind.
 
-Alle Lieferungs-Microservices und alle Rechnungs-Microservices sind
+Alle Versand-Microservices und alle Rechnungs-Microservices sind
 jeweils in einer Consumer Group organisiert. Das bedeutet, dass die
 Records für die Bestellungen auf alle Consumer verteilt werden, aber
 jeder Record nur an genau einen Consumer geschickt wird. So kann
 sichergestellt werden, dass zu einer Bestellung nur ein
 Rechnungs-Microservice eine Rechnung schreibt und nur ein
-Lieferungs-Microservice eine Lieferung veranlasst.
+Versand-Microservice eine Lieferung veranlasst.
 
-Der Lieferungs-Microservice und der Rechnungs-Microservice speichern
+Der Versand-Microservice und der Rechnungs-Microservice speichern
 die Informationen aus den Records in ihren eigenen
 Datenbank-Schemata. Alle Microservices nutzen eine gemeinsame
 Postgres-Datenbank.
 
-Jeder Kafka-Record enthält eine Bestellung. Der Key ist ID der
-Bestellung mit Zusatz `created`, also beispielsweise `1created`.
+Jeder Kafka-Record enthält eine Bestellung. Der Key ist die ID der
+Bestellung mit dem Zusatz `created`, also beispielsweise `1created`.
 
 
 #### Avro: Ein alternatives Datenformat
 
 Eine Alternative wäre [Avro](http://avro.apache.org/). Das ist ein
-Datenformat, das ein binäres Protokoll anbietet aber auch eine
+Datenformat, das ein binäres Protokoll anbietet, aber auch eine
 JSON-basierte Repräsentation. Avro hat ein Schema. Dabei ist es zum
 Beispiel mit Vorgabewerten auch möglich, Daten von einer alten Version
 des Schemas in eine neue Version des Schemas zu konvertieren. Dadurch
@@ -195,12 +195,12 @@ bearbeitet wird. Wenn eine der Microservices-Instanzen im Beispiel
 eine neue
 Bestellung aus dem Atom-Feed ausliest, dann überprüft sie zunächst in
 der Datenbank, ob es schon einen Eintrag für diese Bestellung
-gibt, und erzeugt nur dann selber einen Eintrag, wenn das nicht der Fall ist. So
+gibt, und erzeugt nur dann selbst einen Eintrag, wenn das nicht der Fall ist. So
 wird für jede Bestellung nur ein Eintrag in der Datenbank erstellt.
 
 Es ist übrigens nicht zwingend, das Atom-Format zu nutzen. Genauso gut
 kann man ein eigenes Format verwenden, das die Änderungen als Liste
-zur Verfügung stellt und dann Details unter Links zur Verfügung
+und dann Details als Links zur Verfügung
 stellt. Ebenso kann ein anderes Feed-Format wie
 [RSS](http://web.resource.org/rss/1.0/spec) oder
 [JSON Feed](http://jsonfeed.org/) genutzt werden.
@@ -220,14 +220,14 @@ Events nach einiger Zeit nicht mehr zur Verfügung stehen.
 
 ## Fazit
 
-Asynchrone Microservices bieten Vorteile bei der Resilience aber auch
+Asynchrone Microservices bieten Vorteile bei der Resilience, aber auch
 bei der Entkopplung. Kafka ist eine interessante Alternative für
 asynchrone Microservices, weil die Historie der Events auch
 langfristig gespeichert wird. Außerdem kann dadurch auch eine
-Vielzahl von Clients unterstützt werden, ohne dass es allzu viele
-Ressourcen verbraucht.
+Vielzahl von Clients unterstützt werden, ohne dass allzu viele
+Ressourcen verbraucht werden.
 
-Ein HTTP/REST basiertes System, das Änderungen als Atom-Feed oder in
+Ein HTTP- bzw. REST-basiertes System, das Änderungen als Atom-Feed oder in
 einem anderen Datenformat anbietet, hat gegenüber Kafka den Vorteil,
 dass es keinen zusätzlichen Server benötigt. Dafür ist es nicht ganz
 so einfach, eine Nachricht nur an einen Empfänger zu schicken, weil
@@ -239,7 +239,7 @@ dafür das Protokoll keine eigene Unterstützung mitbringt.
 <https://github.com/ewolff/microservice-kafka/blob/master/WIE-LAUFEN.md>.
 
 * Es ist möglich, mehrere Instanzen des Shipping- oder
-  Invoicing-Microservice zu starten. Dazu kann `docker-compose up -d
+  Invoicing-Microservices zu starten. Dazu kann `docker-compose up -d
   --scale shipping=2` oder `docker-compose up -d --scale
   invoicing=2` dienen. Mit
   `docker logs mskafka_invoicing_2` kann man die Logs betrachten. Dort

@@ -1,14 +1,14 @@
 # Grundlagen: Microservices
 
-Der Begriff Microservice ist leider nicht einheitlich definiert, so
-dass diese Broschüre zunächst Microservices und andere
-grundlegenden Ideen darstellen muss.
+Der Begriff Microservice ist leider nicht einheitlich definiert, sodass
+diese Broschüre zunächst Microservices und andere
+grundlegende Ideen darstellen muss.
 
 ## Independent-Systems-Architecture-Prinzipien (ISA) 
 
 [ISA](http://isa-principles.org) (Independent Systems Architecture)
 ist eine Sammlung von grundlegenden Prinzipien für Microservices. Sie
-basiert auf Erfahrung mit Microservices in
+basiert auf Erfahrungen mit Microservices in
 vielen verschiedenen Projekten.
 
 ## Bedingungen
@@ -27,7 +27,7 @@ implementiert sein.
 1. Das System muss in *Module* unterteilt werden, die
 *Schnittstellen* bieten. Der Zugriff auf andere Module ist nur über
 diese Schnittstellen möglich. Module dürfen daher nicht direkt von den
-Implementierungsdetails eines anderen Moduls abhängen, wie z.B. dem
+Implementierungsdetails eines anderen Moduls abhängen, wie zum Beispiel den
 Datenmodellen in der Datenbank.
 
 2. Module müssen *separate Prozesse, Container oder
@@ -47,8 +47,8 @@ Architekturentscheidungen haben:
 und standardisiert sein. Die Integration kann mit synchroner oder
  asynchroner Kommunikation stattfinden und / oder auf Frontend-Ebene.
 
-5. *Kommunikation* muss auf einige Protokolle wie REST oder
-Messaging begrenzt sein. Auch Metadaten, z.B. zur Authentifizierung,
+5. *Kommunikation* muss auf einige Techniken wie REST oder
+Messaging begrenzt und standardisiert sein. Auch Metadaten, zum Beispiel zur Authentifizierung,
 müssen standardisiert sein.
 
 6. Jedes Modul muss seine *eigene unabhängige
@@ -81,7 +81,7 @@ ISA zeigt, dass Microservices eine Art der Modularisierung sind
 [Information Hiding](https://de.wikipedia.org/wiki/Datenkapselung_%28Programmierung%29)
 oder High
 [Cohesion](https://de.wikipedia.org/wiki/Koh%C3%A4sion_%28Informatik%29)
-/ Low Coupling für Microservices übernommen werden. Neu ist bei
+/ Low  Coupling für Microservices übernommen werden. Neu ist bei
 Microservices die Umsetzung als separate Container (Prinzip 2). Das
 erlaubt mehr Freiheit bei der technischen Umsetzung der Module, die
 jedoch mindestens so weit eingeschränkt werden muss, dass man noch von
@@ -121,14 +121,14 @@ Microservices, aber lassen bewusst Fragen offen, wie beispielsweise die
 Organisation, die fachliche Aufteilung oder ob Microservices eine UI
 enthalten sollen oder nicht.
 
-Self-contained Systems (SCS) sind ein Ansatz für Microservices, der
+Self-contained Systems (SCSs) sind ein Ansatz für Microservices, der
 sich schon in vielen Projekten bewährt hat.  Alle wesentlichen
 Informationen zu SCSs finden sich auf der Website
 http://scs-architecture.org/ . Hier ein Überblick über die
 Eigenschaften:
 
-- Jedes SCS ist eine *autonome Web-Anwendung*. Der Code für die
-  Darstellung der Web-Oberfläche ist in dem SCS enthalten. So kann
+- Jedes SCS ist eine *autonome Webanwendung*. Der Code für die
+  Darstellung der Weboberfläche ist in dem SCS enthalten. So kann
   ein SCS seine Funktionalitäten erbringen, ohne auf andere SCSs
   angewiesen zu sein.
 
@@ -136,7 +136,7 @@ Eigenschaften:
   Features über seine eigene UI nutzbar machen.
 
 - Ein SCS kann eine *optionale API* haben. Das ist aber nicht
-  unbedingt notwendig, da das SCS bereits eine Web-Oberfläche für die
+  unbedingt notwendig, da das SCS bereits eine Weboberfläche für die
   Benutzer hat. Für mobile Clients oder andere SCSs kann der Zugriff
   über eine API aber nützlich sein.
 
@@ -159,17 +159,17 @@ Eigenschaften:
 
 - Die *Kommunikation* zwischen SCSs ist *priorisiert*:
   * Frontend-Integration hat die höchste Priorität.
-  * Dann folgt asynchrone Kommunikation
-  * und schließlich ist auch synchrone Kommunikation möglich.
+  * Dann folgt asynchrone Kommunikation.
+  * Und schließlich ist auch synchrone Kommunikation möglich.
 
-    Dabei liegt der Fokus auf der Entkopplung und Resilience. Die
+    Dabei liegt der Fokus auf Entkopplung und Resilience. Die
     höher priorisierten Kommunikationsarten helfen beim Erreichen
     dieser Ziele.
 
 Die SCS-Idee hat sich in vielen Projekten schon bewährt. Die
 [Links der Website](http://scs-architecture.org/links.html) geben
 einen Eindruck von der Nutzung. Sie ist in Reinform nur für
-Web-Anwendungen nutzbar, da zu jedem SCS eine Web-Oberfläche
+Webanwendungen nutzbar, da zu jedem SCS eine Weboberfläche
 gehört. Die konsequente Trennung in Systeme, die eine Fachlichkeit
 implementieren und von einem Team entwickelt werden, ist aber auch für
 andere Arten von Systemen sinnvoll.
@@ -182,6 +182,6 @@ während Self-contained Systems Best Practices definieren, die in
 vielen Projekten erfolgreich eingesetzt worden sind.
 
 Die weiteren Kapitel beschreiben technische Rezepte für die
-Kommunikation zwischen Microservices und zwar in der Reihenfolge der
+Kommunikation zwischen Microservices, und zwar in der Reihenfolge der
 Prioritäten bei SCS: Frontend-Integration, asynchrone Kommunikation und
 schließlich synchrone Kommunikation.

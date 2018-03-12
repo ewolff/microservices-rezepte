@@ -12,11 +12,11 @@ Das Buch gibt es auch als
 
 Motivation, Architektur und Konzepte für Microservices stehen im
 Mittelpunkt des
-[Microservice Buchs](http://microservices-buch.de/). Dieses Buch gibt
+[Microservice-Buchs](http://microservices-buch.de/). Dieses Buch gibt
 es auch als [englische Übersetzung](http://microservices-book.com/).
 
 Schließlich bietet der
-[Microservices Überblick](http://microservices-buch.de/ueberblick.html)
+[Microservices-Überblick](http://microservices-buch.de/ueberblick.html)
 oder die
 [englische Übersetzung](http://microservices-book.com/primer.html)
 einen kostenlosen Einblick in die grundlegende Motivation und
