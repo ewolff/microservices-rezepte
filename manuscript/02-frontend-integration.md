@@ -73,7 +73,7 @@ Common-Microservice in Go geschrieben ist. Das zeigt, dass
 auch sehr unterschiedlichen Technologien im Frontend integriert werden
 können.
 
-{title="Listing 1: Vom Order-Microservice ausgegebenes HTML", id="listing-01"}
+{title="Listing 1: Vom Order-Microservice ausgegebenes HTML", id="listing-01", linenos=off}
 ~~~~~~~~
 <html>
 <head>
@@ -105,7 +105,7 @@ Inhalte für die ESI-Tags. Der Varnish steht unter
 lokalen Rechner laufen. [Listing 2](#listing-02) zeigt das HTML, das
 der Varnish ausgibt.
 
-{title="Listing 2: Vom Varnish ausgegebenes HTML", id="listing-02"}
+{title="Listing 2: Vom Varnish ausgegebenes HTML", id="listing-02", linenos=off}
 ~~~~~~~~
 <html>
 <head>

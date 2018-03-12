@@ -221,6 +221,7 @@ Balancer und DNS-Eintrag erstellt.
 Dieser Ausschnitt aus `kubernetes-deploy.sh`  zeigt die 
 Nutzung der Werkzeuge am Beispiel des Catalog-Microservice:
 
+{linenos=off}
 ~~~~~~~~
 #!/bin/sh
 if [ -z "$DOCKER_ACCOUNT" ]; then
