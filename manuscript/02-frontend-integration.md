@@ -71,7 +71,9 @@ nämlich den Order-Microservice. Der Order-Microservice ist eine
 Spring-Boot-Anwendung und in Java geschrieben, während der
 Common-Microservice in Go geschrieben ist. Das zeigt, dass
 auch sehr unterschiedlichen Technologien im Frontend integriert werden
-können.
+können. Der Varnish Cache ist auch dafür zuständig, die Requests an
+den richtigen Microservice weiterzuleiten. Damit nimmt er die Rolle
+eines Reverse Proxys ein.
 
 {title="Listing 1: Vom Order-Microservice ausgegebenes HTML", id="listing-01", linenos=off}
 ~~~~~~~~
